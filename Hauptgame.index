@@ -143,6 +143,24 @@
       color: rgba(255, 235, 220, 0.82);
     }
 
+    .heartsWarning {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      background: rgba(255, 193, 93, 0.12);
+      border: 1px solid rgba(255, 193, 93, 0.45);
+      color: #fff6db;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .heartsWarning .warningIcon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
     .xpHud {
       min-width: 320px;
       display: grid;
@@ -272,7 +290,6 @@
     .passBtn,
     .communityEventBtn,
     .lockerBtn,
-    .roadmapBtn,
     .loreBtn,
     .moreBtn {
       position: static;
@@ -448,7 +465,6 @@
     .skillBtn:hover,
     .passBtn:hover,
     .lockerBtn:hover,
-    .roadmapBtn:hover,
     .moreBtn:hover,
     .achievementCloseBtn:hover,
     .shopActionBtn:hover,
@@ -483,13 +499,6 @@
         linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05)),
         linear-gradient(135deg, rgba(255, 116, 170, 0.95), rgba(143, 45, 102, 0.95));
       border-color: rgba(255, 214, 232, 0.3);
-    }
-    .roadmapBtn {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05)),
-        linear-gradient(135deg, rgba(120, 255, 210, 0.95), rgba(36, 142, 138, 0.95));
-      border-color: rgba(185, 255, 236, 0.32);
-      color: #f3fffb;
     }
     .loreBtn {
       background:
@@ -12561,7 +12570,6 @@
     body.lobbyMode .passBtn,
     body.lobbyMode .skillBtn,
     body.lobbyMode .shopBtn,
-    body.lobbyMode .roadmapBtn,
     body.lobbyMode .moreBtn {
       min-height: 62px;
       border-radius: 24px;
@@ -12598,12 +12606,6 @@
       background:
         linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)),
         linear-gradient(135deg, rgba(94, 129, 78, 0.96), rgba(54, 82, 40, 0.98));
-    }
-
-    body.lobbyMode .roadmapBtn {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)),
-        linear-gradient(135deg, rgba(88, 152, 140, 0.96), rgba(44, 96, 90, 0.98));
     }
 
     body.lobbyMode .moreBtn {
@@ -14203,7 +14205,6 @@
     body.lobbyMode .passBtn,
     body.lobbyMode .skillBtn,
     body.lobbyMode .shopBtn,
-    body.lobbyMode .roadmapBtn,
     body.lobbyMode .moreBtn {
       min-width: 124px;
       min-height: 56px;
@@ -14224,14 +14225,9 @@
       background: linear-gradient(135deg, rgba(86, 178, 116, 0.84), rgba(43, 96, 66, 0.88));
     }
 
-    body.lobbyMode .roadmapBtn {
-      background: linear-gradient(135deg, rgba(89, 196, 178, 0.86), rgba(36, 86, 80, 0.9));
-    }
-
     body.lobbyMode .helpBtn,
     body.lobbyMode .lockerBtn,
     body.lobbyMode .skillBtn,
-    body.lobbyMode .roadmapBtn,
     body.lobbyMode .moreBtn {
       background: linear-gradient(135deg, rgba(34, 42, 58, 0.92), rgba(16, 20, 29, 0.96));
     }
@@ -15043,7 +15039,6 @@
           <span id="passBtnTimer" class="passBtnTimer">Chapter 2 • S1 Riss-Zeit</span>
         </span>
       </button>
-      <button id="roadmapBtn" class="roadmapBtn">Roadmap</button>
       <button id="skillBtn" class="skillBtn">Skills</button>
       <button id="shopBtn" class="shopBtn">Shop</button>
       <button id="loreBtn" class="loreBtn">Lore</button>
@@ -15199,115 +15194,12 @@
 
   <script id="leakDatamineDiff" type="application/json">
     [
-      { "status": "new", "code": "RZ-7XK3", "title": "Riss-Zeit Signal", "text": "Ein instabiles Portal pulsiert. Etwas aus der Zukunft versucht Kontakt aufzunehmen." },
-      { "status": "new", "code": "CHRONO-02", "title": "Chrono-Kern", "text": "Die Zeitmodule sind aktiv. Rift-Rush-Fenster werden laenger, aber nicht stabiler." },
-      { "status": "new", "code": "CREATIVE-UEFN", "title": "Editor Drop", "text": "Der 3D-Editor bekommt neue Werkzeuge, inklusive Höhenlayer und Formen." },
-      { "status": "new", "code": "SEASON2-FRONT", "title": "Season 2 Teaser", "text": "Zwei Fraktionen formen die Fronten. Die Wahl entscheidet den Story-Flow." },
-      { "status": "new", "code": "RIFT-OPS", "title": "Rift Ops", "text": "Ein PvE-Testmodus fuer Rift-Operationen wird intern vorbereitet." },
-      { "status": "new", "code": "BIOME-GLASS", "title": "Glass-Biom", "text": "Ein neues Biom mit Glas-Schollen und Lichtkanten taucht in den Daten auf." },
-      { "status": "new", "code": "MC-CREW", "title": "Minecraft Crew", "text": "Crew-System fuer monatliche Bundles und Drops. Status: deaktiviert." },
-      { "status": "new", "code": "SHOP-COMINGSOON", "title": "Shop Freeze", "text": "Alle Shop-Bereiche sind vorerst auf COMING SOON gestellt. Nur Pass-Pakete bleiben." },
-      { "status": "removed", "code": "SKIN-NULL", "title": "Null-Skin", "text": "Ein kompletter Spezial-Look ohne Augen wird experimentell getestet." },
-      { "status": "removed", "code": "PORTAL-LOCK", "title": "Portal Lock", "text": "Zeitweise werden Portale per Story-Trigger gesperrt." },
-      { "status": "removed", "code": "AUDIO-RIFT", "title": "Rift-Audio", "text": "Neue Ambient-Layer und tieferes Brummen im Riss-Biom." },
-      { "status": "removed", "code": "VOID-ALPHA", "title": "Falscher Leak", "text": "Dieser Leak ist absichtlich falsch. Nicht alles ist echt." }
+      { "status": "new", "code": "SOLO-RUSH", "title": "Solo Rush", "text": "Solo-Loop, Abwurf und Progress-Schritte bekommen morgen neue Gameplay-Parts." },
+      { "status": "new", "code": "RUNTIME-06APR", "title": "Update Tag", "text": "Ingame update erst am 06.04.2026 im Lauf des Tages mit neuen Gameplay-Sachen." },
+      { "status": "new", "code": "GAMELOOP-REFRESH", "title": "Gameplay Rework", "text": "Neue Solo-Gameplay-Sachen, Balancing und UI-Feedback kommen mit dem Update." },
+      { "status": "removed", "code": "OLD-ROADMAP", "title": "Roadmap Archiv", "text": "Die alte Roadmap-Ansicht wurde gestrichen, Hinweise leben jetzt im Solo-HUD." }
     ]
   </script>
-
-  <div id="roadmapMenu" class="inventoryMenu hidden">
-    <div class="roadmapWrap">
-      <div class="roadmapTop">
-        <div class="roadmapHero">
-          <div class="roadmapEyebrow">Season 1</div>
-          <div class="roadmapTitle">Riss-Zeit Roadmap</div>
-          <div class="roadmapLead">Hier siehst du die Story- und Feature-Schritte für Season 1 sowie den Ausblick auf Season 2.</div>
-        </div>
-        <div class="roadmapStatusCard">
-          <div class="roadmapStatusLabel">Status</div>
-          <div class="roadmapStatusValue">Live</div>
-          <div class="roadmapLead">Chapter 2 • Season 1 läuft. Roadmap-Updates kommen im Verlauf der Season.</div>
-        </div>
-      </div>
-
-      <div class="roadmapGrid">
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Phase 1 <span class="roadmapCheck">✓</span></div>
-          <div class="roadmapCardTitle">Riss-Start</div>
-          <div class="roadmapCardText">Neue Portale, Riss-Looks und ein instabiler Mix im Shop. Fokus: Einstieg, Loot-Flow und erste Story-Fragmente.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Phase 2 <span class="roadmapCheck">✓</span></div>
-          <div class="roadmapCardTitle">Chrono-Module</div>
-          <div class="roadmapCardText">Neue Module + Skill-Tuning, mehr Quests und gezielte Bundles. Dazu: Creative-Engine Ausbau mit 3D-Editor, Insel-Saves und Publish-Flow.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Phase 3</div>
-          <div class="roadmapCardTitle">Event-Wochen</div>
-          <div class="roadmapCardText">Community-Event, zeitlich begrenzte Looks, neues Pass-Panel und Story-Fortschritt im Lobby-Layer.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Finale</div>
-          <div class="roadmapCardTitle">Season-Showdown</div>
-          <div class="roadmapCardText">Großer Abschluss mit Mini-Boss, Endgame-Quest und Story-Entscheidung, die in Season 2 reinspielt.</div>
-        </div>
-      </div>
-
-      <div class="roadmapGrid">
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Season 2</div>
-          <div class="roadmapCardTitle">Rissfronten (Teaser)</div>
-          <div class="roadmapCardText">Story entscheidet sich in Season 2: Zwei Fraktionen stehen sich gegenüber. Teamwahl folgt erst mit Season-Start.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Season 3</div>
-          <div class="roadmapCardTitle">COMING SOON</div>
-          <div class="roadmapCardText">Kommt später als großer Content-Drop mit neuem Thema.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Season 4</div>
-          <div class="roadmapCardTitle">COMING SOON</div>
-          <div class="roadmapCardText">Weitere Roadmap-Details folgen.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Season 5</div>
-          <div class="roadmapCardTitle">COMING SOON</div>
-          <div class="roadmapCardText">Halten wir bewusst geheim bis zum Reveal.</div>
-        </div>
-      </div>
-
-      <div class="roadmapGrid">
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Steam Demo</div>
-          <div class="roadmapCardTitle">Demo-Roadmap</div>
-          <div class="roadmapCardText"><strong>WICHTIG: Sobald es bereit für Steam ist!</strong> Kurze, klare Demo-Phase mit Fokus auf Rift-Rush, Solo-Loop und Progress-Hook.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Woche 1</div>
-          <div class="roadmapCardTitle">Core Loop</div>
-          <div class="roadmapCardText">Rift-Rush spielbar, Solo-Loop stabil, erstes Reward-Popup.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Woche 2</div>
-          <div class="roadmapCardTitle">Progress & Style</div>
-          <div class="roadmapCardText">Level-Up, Skillpunkte, 1-2 Skins + Spind-Wechsel.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Woche 3</div>
-          <div class="roadmapCardTitle">Mini-Content</div>
-          <div class="roadmapCardText">Kurze Quest-Kette + Slime-Varianten-Set.</div>
-        </div>
-        <div class="roadmapCard">
-          <div class="roadmapCardMeta">Woche 4</div>
-          <div class="roadmapCardTitle">Steam Polish</div>
-          <div class="roadmapCardText">Start-Flow glatt, Bugfixes, Wishlist-CTA, Demo-Badge.</div>
-        </div>
-      </div>
-
-      <div style="text-align:center; margin-top:18px;">
-        <button id="closeRoadmapBtn" class="achievementCloseBtn">Schließen</button>
-      </div>
-    </div>
-  </div>
 
   <div id="loreMenu" class="inventoryMenu hidden">
     <div class="loreWrap">
@@ -16240,7 +16132,6 @@ document.getElementById("adminResetGlobalDiscountBtn").addEventListener("click",
     const communityBtn = document.getElementById("communityBtn");
     const topMenuMorePanel = document.getElementById("topMenuMorePanel");
     const twitchBtn = document.getElementById("twitchBtn");
-    const roadmapBtn = document.getElementById("roadmapBtn");
     const shopBtn = document.getElementById("shopBtn");
     const loreBtn = document.getElementById("loreBtn");
     const creatorBtn = document.getElementById("creatorBtn");
@@ -16325,8 +16216,6 @@ const wishlistShopList = document.getElementById("wishlistShopList");
     const closeLeakBtn = document.getElementById("closeLeakBtn");
     const crewMenu = document.getElementById("crewMenu");
     const closeCrewBtn = document.getElementById("closeCrewBtn");
-    const roadmapMenu = document.getElementById("roadmapMenu");
-    const closeRoadmapBtn = document.getElementById("closeRoadmapBtn");
     const loreMenu = document.getElementById("loreMenu");
     const closeLoreBtn = document.getElementById("closeLoreBtn");
     const loreRiftToggle = document.getElementById("loreRiftToggle");
@@ -17163,7 +17052,6 @@ async function resetGlobalDiscount() {
     let shopPurchaseOpen = false;
     let passPurchaseOpen = false;
     let communityEventOpen = false;
-    let roadmapOpen = false;
     let loreOpen = false;
     let npcOpen = false;
     let riftNextGlitchAt = 0;
@@ -23564,7 +23452,7 @@ async function loadMaintenanceStateFromSupabase() {
       const moreWrap = topMenuDock.querySelector(".topMenuMoreWrap");
       const topMenuPrimary = topMenuDock.querySelector(".topMenuPrimary");
       if (!moreWrap || !topMenuPrimary) return;
-      const primaryButtons = [helpBtn, lockerBtn, passBtn, roadmapBtn, skillBtn, shopBtn, loreBtn, leakBtn];
+      const primaryButtons = [helpBtn, lockerBtn, passBtn, skillBtn, shopBtn, loreBtn, leakBtn];
       if (active) {
         const first = topMenuMorePanel.firstChild;
         primaryButtons.forEach((btn) => {
@@ -24770,10 +24658,6 @@ async function loadMaintenanceStateFromSupabase() {
         communityEventOpen = false;
         if (communityEventMenu) communityEventMenu.classList.add("hidden");
       }
-      if (except !== "roadmap") {
-        roadmapOpen = false;
-        if (roadmapMenu) roadmapMenu.classList.add("hidden");
-      }
       if (except !== "lore") {
         loreOpen = false;
         if (loreMenu) loreMenu.classList.add("hidden");
@@ -24826,12 +24710,6 @@ async function loadMaintenanceStateFromSupabase() {
       closeMenus("crew");
       crewOpen = !crewOpen;
       if (crewMenu) crewMenu.classList.toggle("hidden", !crewOpen);
-    }
-
-    function toggleRoadmapMenu() {
-      closeMenus("roadmap");
-      roadmapOpen = !roadmapOpen;
-      if (roadmapMenu) roadmapMenu.classList.toggle("hidden", !roadmapOpen);
     }
 
     function toggleLoreMenu() {
@@ -26719,7 +26597,6 @@ async function loadMaintenanceStateFromSupabase() {
       if (lockerBtn) lockerBtn.classList.toggle("hidden", !inLobby && !creativeActive);
       if (passBtn) passBtn.classList.toggle("hidden", !inLobby && !creativeActive);
       if (communityBtn) communityBtn.classList.add("hidden");
-      if (roadmapBtn) roadmapBtn.classList.toggle("hidden", !inLobby && !creativeActive);
       if (shopBtn) {
         shopBtn.classList.toggle("hidden", !inLobby && !creativeActive);
         shopBtn.disabled = inLobby && isShopFeatureDisabled();
@@ -27109,10 +26986,14 @@ async function loadMaintenanceStateFromSupabase() {
           </div>
         `
         : "";
+      const soloWarning = selectedLobbyMode === "solo"
+        ? `<div class="heartsWarning"><span class="warningIcon">⚠️</span>Ingame update erst am 06.04.2026 im Lauf des Tages mit neuen Gameplay-Sachen.</div>`
+        : "";
       heartsHud.innerHTML = `
         <div class="hudTitle">Leben</div>
         <div class="heartsRow">${drawHearts()}</div>
         <div class="heartsMeta">${player.health} / ${player.maxHealth} Herzen</div>
+        ${soloWarning}
         ${riftExtra}
       `;
     }
@@ -28455,7 +28336,6 @@ async function loadMaintenanceStateFromSupabase() {
       openLobby();
     });
     if (shopBtn) shopBtn.addEventListener("click", () => toggleShop());
-    if (roadmapBtn) roadmapBtn.addEventListener("click", () => toggleRoadmapMenu());
     if (loreBtn) loreBtn.addEventListener("click", () => toggleLoreMenu());
     if (shopFilterList) {
       shopFilterList.querySelectorAll("[data-shop-filter]").forEach((button) => {
@@ -28476,10 +28356,6 @@ async function loadMaintenanceStateFromSupabase() {
     if (closeCommunityEventBtn) closeCommunityEventBtn.addEventListener("click", () => {
       communityEventOpen = false;
       if (communityEventMenu) communityEventMenu.classList.add("hidden");
-    });
-    if (closeRoadmapBtn) closeRoadmapBtn.addEventListener("click", () => {
-      roadmapOpen = false;
-      if (roadmapMenu) roadmapMenu.classList.add("hidden");
     });
     if (closeLoreBtn) closeLoreBtn.addEventListener("click", () => {
       loreOpen = false;
