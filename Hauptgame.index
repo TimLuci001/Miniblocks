@@ -15485,7 +15485,6 @@
             <div id="passTierBuyBox" class="passTierBuyBox passNeoCard passNeoOfferCard"></div>
           </aside>
         </div>
-        <div id="passQuestPanel" class="passQuestPanel"></div>
         <div class="passNeoFooter">
           <button id="closePassBtn" class="achievementCloseBtn passNeoCloseBtn">Schließen</button>
         </div>
@@ -16355,7 +16354,6 @@ const wishlistShopList = document.getElementById("wishlistShopList");
     const passProgressText = document.getElementById("passProgressText");
     const passProgressBar = document.getElementById("passProgressBar");
     const passTierBuyBox = document.getElementById("passTierBuyBox");
-    const passQuestPanel = document.getElementById("passQuestPanel");
     const passPremiumBox = document.getElementById("passPremiumBox");
     const passTrack = document.getElementById("passTrack");
     const communityEventMenu = document.getElementById("communityEventMenu");
@@ -17575,7 +17573,7 @@ let shopWishlist = [];
     const PASS_SUPPORT_PACKAGE_PRICE = 750;
     const CURRENCY_NAME = "M-Bucks";
     const CURRENCY_ICON_PATH = "assets/ui/vbucks-icon.png";
-    const BATTLE_PASS_TIER_XP = 5000;
+    const BATTLE_PASS_TIER_XP = 10000;
     const BATTLE_PASS_SINGLE_TIER_PRICE = 0;
     const BATTLE_PASS_25_PACKAGE_PRICE = 2800;
     const BATTLE_PASS_25_PACKAGE_TIERS = 25;
@@ -17717,21 +17715,6 @@ let shopWishlist = [];
       shadow: { id: "shadow", label: "SHADOW", lane: "shadow" }
     };
     let battlePassTeamChoice = "";
-    const TASK_RESET_INTERVAL_MS = 15 * 60 * 1000;
-    const TASK_CHECK_INTERVAL_MS = 60 * 1000;
-    const TASK_TEMPLATES = {
-      ghost: [
-        { id: "ghost_signal", title: "Ghost Signal", desc: "Scanne drei Schattenrisse im Grasland.", rewardType: "tiers", rewardAmount: 1 },
-        { id: "ghost_watch", title: "Ghost Watch", desc: "Halte 45 Sekunden in der Dämmerung oben auf der Plattform.", rewardType: "tiers", rewardAmount: 1 },
-        { id: "ghost_echo", title: "Echo der Wächter", desc: "Bereinige 120 Blöcke ohne Schaden.", rewardType: "tiers", rewardAmount: 1 }
-      ],
-      shadow: [
-        { id: "shadow_blitz", title: "Shadow Blitz", desc: "Besiege 2 Slimes und einen Elite.", rewardType: "tiers", rewardAmount: 1 },
-        { id: "shadow_hush", title: "Shadow Hush", desc: "Sammle 3 Regenfarben in der Nacht.", rewardType: "tiers", rewardAmount: 1 },
-        { id: "shadow_proxy", title: "Shadow Proxy", desc: "Aktiviere 2 Teleporter hintereinander.", rewardType: "tiers", rewardAmount: 1 }
-      ]
-    };
-    let battlePassTaskState = { ghost: [], shadow: [], lastResetAt: 0 };
     const nudelPassRewards = [
       { tier: 1, reward: { type: "gold", amount: 40, label: "+40 M-Bucks" } },
       { tier: 2, reward: { type: "xp", amount: 60, label: "+60 XP" } },
@@ -22512,10 +22495,9 @@ let shopWishlist = [];
       const mainPageCount = Math.max(1, Math.ceil(BATTLE_PASS_BASE_TIERS / BATTLE_PASS_PAGE_SIZE));
       const bonusPageStart = mainPageCount + 1;
       const pageGroupLabel = currentPage.type === "bonus" ? "Bonus-Seite" : "Hauptseite";
-      const currentTasks = battlePassTeamChoice ? (battlePassTaskState[battlePassTeamChoice] || []) : [];
-      const tasksTotal = Math.max(currentTasks.length, 3);
-      const completedTasks = currentTasks.filter((task) => task.completed).length;
-      const taskProgressPct = Math.min(100, Math.round((completedTasks / tasksTotal) * 100));
+      const totalTiers = battlePassRewards.length;
+      const currentXp = Math.max(0, battlePassState.xp || 0);
+      const xpProgressPct = Math.max(0, Math.min(100, (currentXp / (totalTiers * BATTLE_PASS_TIER_XP)) * 100));
 
       renderBattlePassCountdownCard();
       const seasonTagEl = document.getElementById("passSeasonTag");
@@ -22525,8 +22507,8 @@ let shopWishlist = [];
         ? 'Chapter 2 "Top Secret" ist pausiert. Der Pass bleibt aber ohne Countdown sichtbar.'
         : `Top Secret Pass mit ${BATTLE_PASS_BASE_TIERS} Hauptstufen und ${BATTLE_PASS_PAGE_SIZE} Stufen pro Seite. Waehle GHOST oder SHADOW, um eine Reihe freizuschalten. Aktuelles Seitenthema: ${activeTheme.name}. ${activeTheme.accent}`;
       const teamLabel = battlePassTeamChoice ? BATTLE_PASS_TEAM_CHOICES[battlePassTeamChoice].label : "Pass";
-      if (passInfo) passInfo.innerHTML = `${teamLabel} Aufgaben • Stufe ${Math.min(currentTier, battlePassRewards.length)}`;
-      if (passProgressText) passProgressText.innerHTML = `${completedTasks}/${tasksTotal} Aufgaben erledigt • ${pageGroupLabel} ${battlePassPage + 1}/${totalPages}`;
+      if (passInfo) passInfo.innerHTML = `${teamLabel} Reihe • Stufe ${Math.min(currentTier, battlePassRewards.length)}`;
+      if (passProgressText) passProgressText.innerHTML = `${pageGroupLabel} ${battlePassPage + 1}/${totalPages} • ${currentXp.toLocaleString("de-DE")} / ${(totalTiers * BATTLE_PASS_TIER_XP).toLocaleString("de-DE")} XP`;
       const passMetaPill = document.getElementById("passMetaPill");
       const passPagePill = document.getElementById("passPagePill");
       const passScrollPill = document.getElementById("passScrollPill");
@@ -22540,7 +22522,7 @@ let shopWishlist = [];
       if (passScrollPill) {
         passScrollPill.textContent = currentPage.type === "bonus" ? "BONUSBEREICH AKTIV" : "SCROLLEN FÜR SEITEN";
       }
-      passProgressBar.style.width = `${taskProgressPct}%`;
+      passProgressBar.style.width = `${xpProgressPct}%`;
 
       const teamChoiceLabel = battlePassTeamChoice ? BATTLE_PASS_TEAM_CHOICES[battlePassTeamChoice].label : "";
       if (BATTLE_PASS_MAIN_TRACK_DISABLED) {
@@ -22679,9 +22661,8 @@ let shopWishlist = [];
             </div>
           </div>
         </div>
-        ${renderSeasonMemoriesPanel()}
-      `;
-      renderBattlePassTasksSection();
+      ${renderSeasonMemoriesPanel()}
+    `;
 
       const chooseGhostBtn = document.getElementById("chooseGhostBtn");
       if (chooseGhostBtn) {
@@ -22705,114 +22686,6 @@ let shopWishlist = [];
         claimAllPassRewardsBtnTop.textContent = `Alles abholen (${claimableCount})`;
         claimAllPassRewardsBtnTop.addEventListener("click", claimAllAvailablePassRewards);
       }
-    }
-
-    function resetBattlePassTasks(force = false) {
-      const now = Date.now();
-      const sinceLast = now - (battlePassTaskState.lastResetAt || 0);
-      if (!force && sinceLast < TASK_RESET_INTERVAL_MS) return;
-      Object.entries(TASK_TEMPLATES).forEach(([lane, templates]) => {
-        battlePassTaskState[lane] = templates.map((template, index) => ({
-          ...template,
-          id: `${lane}_${template.id}_${now}_${index}`,
-          completed: false
-        }));
-      });
-      battlePassTaskState.lastResetAt = now;
-      if (!force) {
-        showMessage("Battle Pass Aufgaben erneuert.", 2200);
-      }
-      saveGame();
-      renderBattlePass();
-    }
-
-    function getBattlePassTaskRewardLabel(task) {
-      const rewardType = task.rewardType || "xp";
-      if (rewardType === "tiers") {
-        const amount = Math.max(0, Math.floor(Number(task.rewardAmount) || 0));
-        return amount === 1 ? "1 Stufe" : `${amount} Stufen`;
-      }
-      const xp = Number(task.xpReward) || 0;
-      return `${xp.toLocaleString("de-DE")} XP`;
-    }
-
-    function applyBattlePassTaskReward(task) {
-      const rewardType = task.rewardType || "xp";
-      const maxXp = battlePassRewards.length * BATTLE_PASS_TIER_XP;
-      if (rewardType === "tiers") {
-        const amount = Math.max(0, Math.floor(Number(task.rewardAmount) || 0));
-        const xpGain = amount * BATTLE_PASS_TIER_XP;
-        if (xpGain > 0) {
-          battlePassState.xp = Math.min(maxXp, (battlePassState.xp || 0) + xpGain);
-        }
-        return { xp: xpGain, label: getBattlePassTaskRewardLabel(task) };
-      }
-      const xpGain = Number(task.xpReward) || 0;
-      if (xpGain > 0) {
-        battlePassState.xp = Math.min(maxXp, (battlePassState.xp || 0) + xpGain);
-      }
-      return { xp: xpGain, label: getBattlePassTaskRewardLabel(task) };
-    }
-
-    function completeBattlePassTask(taskId) {
-      const lane = taskId.split("_")[0];
-      const tasks = battlePassTaskState[lane];
-      if (!tasks) return;
-      const task = tasks.find((entry) => entry.id === taskId);
-      if (!task || task.completed) return;
-      task.completed = true;
-      const rewardInfo = applyBattlePassTaskReward(task);
-      saveGame();
-      renderBattlePass();
-      showMessage(`${task.title} erledigt! +${rewardInfo.label}`, 2400);
-    }
-
-    function renderBattlePassTasksSection() {
-      if (!passQuestPanel) return;
-      const team = battlePassTeamChoice;
-      const tasks = team ? (battlePassTaskState[team] || []) : [];
-      if (!team) {
-        passQuestPanel.innerHTML = `
-          <div class="passQuestPanelHeader">
-            <div>
-              <div class="passQuestPanelTitle">Pass Quest</div>
-              <div class="passQuestPanelMeta">Wähle Ghost oder Shadow, um deine Aufgaben freizuschalten.</div>
-            </div>
-          </div>
-        `;
-        return;
-      }
-      const completed = tasks.filter((entry) => entry.completed).length;
-      const resetRemaining = Math.max(0, TASK_RESET_INTERVAL_MS - Math.max(0, Date.now() - (battlePassTaskState.lastResetAt || 0)));
-      const resetLabel = formatRemainingTime(resetRemaining);
-      const cards = tasks.map((task) => `
-        <div class="passQuestCard ${task.completed ? "completed" : ""}">
-          <div class="passQuestCardTitle">${task.title}</div>
-          <div class="passQuestCardDesc">${task.desc}</div>
-          <div class="passQuestReward">${getBattlePassTaskRewardLabel(task)}</div>
-          <button class="passQuestButton" data-task-id="${task.id}" ${task.completed ? "disabled" : ""}>
-            ${task.completed ? "Abgeschlossen" : "Abschließen"}
-          </button>
-        </div>
-      `).join("");
-      passQuestPanel.innerHTML = `
-        <div class="passQuestPanelHeader">
-          <div>
-            <div class="passQuestPanelTitle">${BATTLE_PASS_TEAM_CHOICES[team].label} Pass Quest</div>
-            <div class="passQuestPanelMeta">Reset in ${resetLabel}</div>
-          </div>
-          <div class="passQuestPanelMeta">${completed}/${tasks.length} erledigt</div>
-        </div>
-        <div class="passQuestRow">
-          ${cards}
-        </div>
-      `;
-      passQuestPanel.querySelectorAll("[data-task-id]").forEach((button) => {
-        button.addEventListener("click", (event) => {
-          event.stopPropagation();
-          completeBattlePassTask(button.dataset.taskId);
-        });
-      });
     }
 
     function handleBattlePassWheel(event) {
@@ -22977,7 +22850,6 @@ let shopWishlist = [];
       battlePassState.claimedPremium = [];
       battlePassState.lastPurchaseAnimation = 0;
       battlePassTeamChoice = "";
-      battlePassTaskState = { ghost: [], shadow: [], lastResetAt: 0 };
       passSupportState.seasonId = BATTLE_PASS_SEASON_ID;
       passSupportState.purchased = false;
       battlePassPage = 0;
@@ -23085,7 +22957,6 @@ async function loadMaintenanceStateFromSupabase() {
         freeCrateState,
         battlePassState,
         battlePassTeamChoice,
-        battlePassTaskState,
         passSupportState,
         nudelPassState,
         miniPassState,
@@ -23299,13 +23170,6 @@ async function loadMaintenanceStateFromSupabase() {
         battlePassTeamChoice = BATTLE_PASS_TEAM_CHOICES[parsed.battlePassTeamChoice]
           ? parsed.battlePassTeamChoice
           : "";
-      }
-      if (battlePassSeasonMatch && parsed.battlePassTaskState && typeof parsed.battlePassTaskState === "object") {
-        battlePassTaskState = {
-          ghost: Array.isArray(parsed.battlePassTaskState.ghost) ? parsed.battlePassTaskState.ghost : [],
-          shadow: Array.isArray(parsed.battlePassTaskState.shadow) ? parsed.battlePassTaskState.shadow : [],
-          lastResetAt: Number(parsed.battlePassTaskState.lastResetAt) || 0
-        };
       }
       if (parsed.passSupportState?.seasonId === BATTLE_PASS_SEASON_ID) {
         passSupportState.seasonId = BATTLE_PASS_SEASON_ID;
@@ -30615,9 +30479,7 @@ drawRiftGlitchOverlay(cam);
       updateBattlePassAvailability();
       renderBattlePassButtonCountdown();
       renderBattlePassCountdownCard();
-      resetBattlePassTasks(true);
       renderBattlePass();
-      setInterval(() => resetBattlePassTasks(), TASK_CHECK_INTERVAL_MS);
       renderEffects();
       renderXp();
       updateHeartsHud();
