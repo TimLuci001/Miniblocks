@@ -16414,6 +16414,7 @@ const wishlistShopList = document.getElementById("wishlistShopList");
     const npcGoldInfo = document.getElementById("npcGoldInfo");
     const closeNpcBtn = document.getElementById("closeNpcBtn");
     let threeDState = null;
+    let threeDMouseMoveHandler = null;
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -16466,6 +16467,7 @@ const wishlistShopList = document.getElementById("wishlistShopList");
     let cloudSyncTimer = null;
     let cloudSyncInFlight = false;
     let deferredSaveTimer = null;
+    let maintenancePollTimer = null;
     let isThreeDMode = ENABLE_3D_MODE;
     let creativeLockUiTimer = null;
     let maintenanceRealtimeChannel = null;
@@ -19131,14 +19133,18 @@ let shopWishlist = [];
 
       threeDState.renderer.domElement.addEventListener("contextmenu", (e) => e.preventDefault());
 
-      document.addEventListener("mousemove", (e) => {
+      if (threeDMouseMoveHandler) {
+        document.removeEventListener("mousemove", threeDMouseMoveHandler);
+      }
+      threeDMouseMoveHandler = (e) => {
         if (!threeDState.active) return;
         if (document.pointerLockElement !== threeDState.renderer.domElement) return;
 
         threeDState.player.yaw -= e.movementX * 0.0022;
         threeDState.player.pitch -= e.movementY * 0.0022;
         threeDState.player.pitch = Math.max(-1.35, Math.min(1.35, threeDState.player.pitch));
-      });
+      };
+      document.addEventListener("mousemove", threeDMouseMoveHandler);
 
       animateThreeD();
     }
@@ -19150,6 +19156,14 @@ let shopWishlist = [];
       if (threeDState.targetOutline) threeDState.targetOutline.visible = false;
       if (document.pointerLockElement === threeDState.renderer?.domElement) {
         document.exitPointerLock();
+      }
+      if (threeDMouseMoveHandler) {
+        document.removeEventListener("mousemove", threeDMouseMoveHandler);
+        threeDMouseMoveHandler = null;
+      }
+      if (threeDState.renderer) {
+        threeDState.renderer.dispose();
+        threeDState.renderer = null;
       }
       if (threeRoot) threeRoot.classList.add("hidden");
       if (crosshair3d) crosshair3d.classList.add("hidden");
@@ -21096,6 +21110,14 @@ let shopWishlist = [];
     function renderSkills() {
       if (!skillGrid) return;
 
+      if (!skillGrid.dataset.eventsInit) {
+        skillGrid.dataset.eventsInit = "1";
+        skillGrid.addEventListener("click", (event) => {
+          const btn = event.target.closest("button.skillNodeAction[data-skill-key]");
+          if (btn && !btn.disabled) upgradeSkill(btn.dataset.skillKey);
+        });
+      }
+
       const totalLevel = getTotalSkillLevel();
       const highestSkillKey = getHighestSkillKey();
       const highestSkillName = highestSkillKey ? skillData[highestSkillKey].name : "Kein Fokus";
@@ -21220,9 +21242,8 @@ let shopWishlist = [];
               <div class="skillNodeMeta">${getSkillMetaText(key, value)}</div>
               <div class="skillNodeNext">${getSkillNextBonusText(key, value)}</div>
               <div class="skillNodeBar"><span style="width:${Math.min(100, value * 10)}%"></span></div>
-              <button class="skillNodeAction" ${progression.skillPoints <= 0 ? "disabled" : ""}>+ Skillpunkt</button>
+              <button class="skillNodeAction" data-skill-key="${key}" ${progression.skillPoints <= 0 ? "disabled" : ""}>+ Skillpunkt</button>
             `;
-            card.querySelector("button").addEventListener("click", () => upgradeSkill(key));
             sectionGrid.appendChild(card);
           });
 
@@ -21381,6 +21402,15 @@ let shopWishlist = [];
 
     function renderCrafting() {
       if (!craftGrid) return;
+
+      if (!craftGrid.dataset.eventsInit) {
+        craftGrid.dataset.eventsInit = "1";
+        craftGrid.addEventListener("click", (event) => {
+          const btn = event.target.closest("button[data-craft-id]");
+          if (btn && !btn.disabled) craftRecipe(btn.dataset.craftId);
+        });
+      }
+
       if (craftInfo) {
         const builtCount = craftedState.totalCrafts || 0;
         craftInfo.textContent = `${craftingRecipes.length} Rezepte • ${builtCount} Crafts • ${craftedState.portalKeyUnlocked ? "Portale aktiv" : "Portale gesperrt"}`;
@@ -21406,10 +21436,6 @@ let shopWishlist = [];
           </div>
         `;
       }).join("");
-
-      craftGrid.querySelectorAll("button[data-craft-id]").forEach((button) => {
-        button.addEventListener("click", () => craftRecipe(button.dataset.craftId));
-      });
     }
 
     function isNearPortal(portal) {
@@ -24465,6 +24491,15 @@ async function loadMaintenanceStateFromSupabase() {
 
     function renderQuestMenu() {
       if (!questGrid) return;
+
+      if (!questGrid.dataset.eventsInit) {
+        questGrid.dataset.eventsInit = "1";
+        questGrid.addEventListener("click", (event) => {
+          const btn = event.target.closest("button[data-quest-id]");
+          if (btn && !btn.disabled) claimQuestReward(btn.dataset.questId);
+        });
+      }
+
       const activeQuests = getActiveQuestDefinitions();
       const claimedCount = activeQuests.filter((def) => isQuestClaimed(def.id)).length;
       if (questInfo) questInfo.textContent = `${claimedCount} / ${activeQuests.length} erledigt`;
@@ -24492,10 +24527,6 @@ async function loadMaintenanceStateFromSupabase() {
           </div>
         `;
       }).join("");
-
-      questGrid.querySelectorAll("button[data-quest-id]").forEach((button) => {
-        button.addEventListener("click", () => claimQuestReward(button.dataset.questId));
-      });
     }
 
     function normalizeLeakCode(code = "") {
@@ -24569,6 +24600,15 @@ async function loadMaintenanceStateFromSupabase() {
 
     function renderEquipmentMenu() {
       if (!equipmentGrid) return;
+
+      if (!equipmentGrid.dataset.eventsInit) {
+        equipmentGrid.dataset.eventsInit = "1";
+        equipmentGrid.addEventListener("click", (event) => {
+          const btn = event.target.closest("button[data-gear-id]");
+          if (btn && !btn.disabled) equipGear(btn.dataset.gearId);
+        });
+      }
+
       const equippedCount = Object.values(equipmentState.equipped).filter(Boolean).length;
       if (equipmentInfo) equipmentInfo.textContent = `${equippedCount} / 3 ausgerüstet`;
       equipmentGrid.innerHTML = Object.values(equipmentCatalog).map((item) => {
@@ -24588,10 +24628,6 @@ async function loadMaintenanceStateFromSupabase() {
           </div>
         `;
       }).join("");
-
-      equipmentGrid.querySelectorAll("button[data-gear-id]").forEach((button) => {
-        button.addEventListener("click", () => equipGear(button.dataset.gearId));
-      });
     }
 
     function rollFortuneBonus() {
@@ -24890,6 +24926,41 @@ async function loadMaintenanceStateFromSupabase() {
       ensureEquipmentUnlocks();
       ensureHotbarSlots();
       ensureInventoryBlockOrder();
+
+      if (!inventoryGrid.dataset.eventsInit) {
+        inventoryGrid.dataset.eventsInit = "1";
+        inventoryGrid.addEventListener("dragstart", (event) => {
+          const slot = event.target.closest(".inventorySlot[data-block-id]");
+          if (!slot) return;
+          event.dataTransfer.setData("text/plain", slot.dataset.blockId || "");
+          if (slot.dataset.hotbarIndex) event.dataTransfer.setData("application/x-hotbar-index", slot.dataset.hotbarIndex);
+        });
+        inventoryGrid.addEventListener("dragover", (event) => {
+          const slot = event.target.closest(".inventorySlot");
+          if (slot) event.preventDefault();
+        });
+        inventoryGrid.addEventListener("drop", (event) => {
+          const slot = event.target.closest(".inventorySlot");
+          if (!slot) return;
+          event.preventDefault();
+          const droppedBlockId = Number(event.dataTransfer.getData("text/plain"));
+          const fromHotbarIndex = event.dataTransfer.getData("application/x-hotbar-index");
+          if (slot.dataset.hotbarIndex !== undefined && slot.dataset.hotbarIndex !== "") {
+            const hotbarIndex = Number(slot.dataset.hotbarIndex);
+            if (fromHotbarIndex !== "") {
+              swapHotbarSlots(Number(fromHotbarIndex), hotbarIndex);
+            } else if (droppedBlockId) {
+              assignBlockToHotbar(droppedBlockId, hotbarIndex);
+            }
+          } else if (slot.dataset.blockId && !slot.dataset.hotbarIndex) {
+            const targetBlockId = Number(slot.dataset.blockId);
+            if (!droppedBlockId || !targetBlockId || droppedBlockId === targetBlockId) return;
+            const targetIndex = inventoryBlockOrder.indexOf(targetBlockId);
+            if (targetIndex >= 0) moveInventoryBlock(droppedBlockId, targetIndex);
+          }
+        });
+      }
+
       const lootCount = Object.values(loot).reduce((sum, amount) => sum + (amount || 0), 0);
       const blockCount = Object.keys(inventory).reduce((sum, id) => sum + (inventory[id] || 0), 0);
       const equippedCount = Object.values(equipmentState.equipped).filter(Boolean).length;
@@ -25021,40 +25092,6 @@ async function loadMaintenanceStateFromSupabase() {
         }
         inventoryGrid.appendChild(slot);
       }
-
-      inventoryGrid.querySelectorAll(".inventorySlot[data-block-id]").forEach((slot) => {
-        slot.addEventListener("dragstart", (event) => {
-          event.dataTransfer.setData("text/plain", slot.dataset.blockId || "");
-          if (slot.dataset.hotbarIndex) event.dataTransfer.setData("application/x-hotbar-index", slot.dataset.hotbarIndex);
-        });
-      });
-
-      inventoryGrid.querySelectorAll(".inventorySlot[data-hotbar-index]").forEach((slot) => {
-        slot.addEventListener("dragover", (event) => event.preventDefault());
-        slot.addEventListener("drop", (event) => {
-          event.preventDefault();
-          const droppedBlockId = Number(event.dataTransfer.getData("text/plain"));
-          const fromHotbarIndex = event.dataTransfer.getData("application/x-hotbar-index");
-          const hotbarIndex = Number(slot.dataset.hotbarIndex);
-          if (fromHotbarIndex !== "") {
-            swapHotbarSlots(Number(fromHotbarIndex), hotbarIndex);
-          } else if (droppedBlockId) {
-            assignBlockToHotbar(droppedBlockId, hotbarIndex);
-          }
-        });
-      });
-
-      inventoryGrid.querySelectorAll(".inventorySlot[data-block-id]:not([data-hotbar-index])").forEach((slot) => {
-        slot.addEventListener("dragover", (event) => event.preventDefault());
-        slot.addEventListener("drop", (event) => {
-          event.preventDefault();
-          const droppedBlockId = Number(event.dataTransfer.getData("text/plain"));
-          const targetBlockId = Number(slot.dataset.blockId);
-          if (!droppedBlockId || !targetBlockId || droppedBlockId === targetBlockId) return;
-          const targetIndex = inventoryBlockOrder.indexOf(targetBlockId);
-          if (targetIndex >= 0) moveInventoryBlock(droppedBlockId, targetIndex);
-        });
-      });
     }
 
     function playEquipSound() {
@@ -25706,56 +25743,30 @@ async function loadMaintenanceStateFromSupabase() {
         <div class="lobbyFriendsList">${listMarkup}</div>
       `;
 
-      lobbyFriendsPanel.querySelectorAll("[data-friend-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          lobbyFriendsState.selectedId = button.getAttribute("data-friend-id") || "";
-          renderLobbyFriendsPanel();
-        });
-      });
-
-      const inviteBtn = lobbyFriendsPanel.querySelector("[data-invite-friend]");
-      if (inviteBtn) {
-        inviteBtn.addEventListener("click", () => {
-          const friendId = inviteBtn.getAttribute("data-invite-friend");
-          if (friendId) toggleLobbyFriendInvite(friendId);
+      if (!lobbyFriendsPanel.dataset.eventsInit) {
+        lobbyFriendsPanel.dataset.eventsInit = "1";
+        lobbyFriendsPanel.addEventListener("click", (event) => {
+          const btn = event.target.closest("button[type='button']");
+          if (!btn) return;
+          if (btn.dataset.friendId) {
+            lobbyFriendsState.selectedId = btn.dataset.friendId;
+            renderLobbyFriendsPanel();
+            return;
+          }
+          const friendId = btn.getAttribute("data-invite-friend");
+          if (friendId !== null) { toggleLobbyFriendInvite(friendId); return; }
+          const removeFriendId = btn.getAttribute("data-remove-friend");
+          if (removeFriendId !== null) { removeLobbyFriend(removeFriendId); return; }
+          const acceptFriend = btn.getAttribute("data-accept-friend-request");
+          if (acceptFriend !== null) { acceptLobbyFriendRequest(acceptFriend); return; }
+          const declineFriend = btn.getAttribute("data-decline-friend-request");
+          if (declineFriend !== null) { declineLobbyFriendRequest(declineFriend); return; }
+          const acceptParty = btn.getAttribute("data-accept-party-request");
+          if (acceptParty !== null) { acceptLobbyPartyInvite(acceptParty); return; }
+          const declineParty = btn.getAttribute("data-decline-party-request");
+          if (declineParty !== null) { declineLobbyPartyInvite(declineParty); return; }
         });
       }
-
-      const removeBtn = lobbyFriendsPanel.querySelector("[data-remove-friend]");
-      if (removeBtn) {
-        removeBtn.addEventListener("click", () => {
-          const friendId = removeBtn.getAttribute("data-remove-friend");
-          if (friendId) removeLobbyFriend(friendId);
-        });
-      }
-
-      lobbyFriendsPanel.querySelectorAll("[data-accept-friend-request]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const ownerKey = button.getAttribute("data-accept-friend-request");
-          if (ownerKey) acceptLobbyFriendRequest(ownerKey);
-        });
-      });
-
-      lobbyFriendsPanel.querySelectorAll("[data-decline-friend-request]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const ownerKey = button.getAttribute("data-decline-friend-request");
-          if (ownerKey) declineLobbyFriendRequest(ownerKey);
-        });
-      });
-
-      lobbyFriendsPanel.querySelectorAll("[data-accept-party-request]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const ownerKey = button.getAttribute("data-accept-party-request");
-          if (ownerKey) acceptLobbyPartyInvite(ownerKey);
-        });
-      });
-
-      lobbyFriendsPanel.querySelectorAll("[data-decline-party-request]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const ownerKey = button.getAttribute("data-decline-party-request");
-          if (ownerKey) declineLobbyPartyInvite(ownerKey);
-        });
-      });
     }
 
     function renderLobbyModeSelection() {
@@ -29874,6 +29885,39 @@ async function loadMaintenanceStateFromSupabase() {
 
     function renderHotbar() {
       ensureHotbarSlots();
+      if (!hotbar.dataset.eventsInit) {
+        hotbar.dataset.eventsInit = "1";
+        hotbar.addEventListener("click", (event) => {
+          const slot = event.target.closest(".slot[data-hotbar-index]");
+          if (!slot) return;
+          const blockId = hotbarSlots[Number(slot.dataset.hotbarIndex)];
+          if (blockId !== undefined) {
+            selectedBlock = blockId;
+            renderHotbar();
+          }
+        });
+        hotbar.addEventListener("dragstart", (event) => {
+          const slot = event.target.closest("[data-hotbar-index]");
+          if (!slot) return;
+          const idx = Number(slot.dataset.hotbarIndex);
+          event.dataTransfer.setData("text/plain", String(hotbarSlots[idx]));
+          event.dataTransfer.setData("application/x-hotbar-index", slot.dataset.hotbarIndex);
+        });
+        hotbar.addEventListener("dragover", (event) => event.preventDefault());
+        hotbar.addEventListener("drop", (event) => {
+          event.preventDefault();
+          const slot = event.target.closest(".slot[data-hotbar-index]");
+          if (!slot) return;
+          const i = Number(slot.dataset.hotbarIndex);
+          const droppedBlockId = Number(event.dataTransfer.getData("text/plain"));
+          const fromHotbarIndex = event.dataTransfer.getData("application/x-hotbar-index");
+          if (fromHotbarIndex !== "") {
+            swapHotbarSlots(Number(fromHotbarIndex), i);
+          } else if (droppedBlockId) {
+            assignBlockToHotbar(droppedBlockId, i);
+          }
+        });
+      }
       hotbar.innerHTML = "";
       for (let i = 0; i < hotbarSlots.length; i++) {
         const id = hotbarSlots[i];
@@ -29892,25 +29936,6 @@ async function loadMaintenanceStateFromSupabase() {
           <div class="slotSwatch" style="background:${blockColor};"></div>
           <div class="slotCount">${isCreativeModeActive() ? "INF" : (inventory[id] || 0)}</div>
         `;
-        slot.addEventListener("click", () => {
-          selectedBlock = id;
-          renderHotbar();
-        });
-        slot.addEventListener("dragstart", (event) => {
-          event.dataTransfer.setData("text/plain", String(id));
-          event.dataTransfer.setData("application/x-hotbar-index", String(i));
-        });
-        slot.addEventListener("dragover", (event) => event.preventDefault());
-        slot.addEventListener("drop", (event) => {
-          event.preventDefault();
-          const droppedBlockId = Number(event.dataTransfer.getData("text/plain"));
-          const fromHotbarIndex = event.dataTransfer.getData("application/x-hotbar-index");
-          if (fromHotbarIndex !== "") {
-            swapHotbarSlots(Number(fromHotbarIndex), i);
-          } else if (droppedBlockId) {
-            assignBlockToHotbar(droppedBlockId, i);
-          }
-        });
         hotbar.appendChild(slot);
       }
     }
@@ -30437,7 +30462,7 @@ drawRiftGlitchOverlay(cam);
     }
   });
   subscribeToGameStateRealtime();
-  setInterval(async () => {
+  maintenancePollTimer = setInterval(async () => {
     const loadedFromSupabase = await loadMaintenanceStateFromSupabase();
     if (loadedFromSupabase) {
       updateBattlePassAvailability();
@@ -30512,6 +30537,7 @@ drawRiftGlitchOverlay(cam);
       const payload = createSavePayload();
       localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
       if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
+      if (maintenancePollTimer) clearInterval(maintenancePollTimer);
       uploadCloudSave(payload);
     });
 
