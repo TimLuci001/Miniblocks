@@ -15963,7 +15963,7 @@
     const CREATIVE_WORLDS_TABLE = "creative_worlds";
     const ENABLE_3D_MODE = false;
     const CREATIVE_LOCK_ENABLED = true;
-    const SHOP_COMING_SOON = true;
+    const SHOP_COMING_SOON = false;
     const SHOP_PLACEHOLDER_MESSAGE = "Inhalt unbekannt. Der Bereich bleibt leer und kann nicht gekauft werden.";
     const MINECRAFT_CREW_ENABLED = false;
     const CREATIVE_LOCK_UNTIL = new Date(2026, 3, 6, 21, 0, 0).getTime();
