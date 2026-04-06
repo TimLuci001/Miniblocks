@@ -21,49 +21,77 @@
       display: none !important;
     }
 
-    .topHud {
+    .hudRack {
       position: fixed;
-      top: 12px;
+      top: 10px;
       left: 12px;
-      z-index: 30;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
-      max-width: 70vw;
+      right: 12px;
+      z-index: 80;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 12px;
+      pointer-events: none;
     }
 
-    .topHudLeft {
+    .hudRack > * {
+      pointer-events: none;
+    }
+
+    .hudRack .hudRight,
+    .hudRack .topMenuDock,
+    .hudRack .topMenuDock *,
+    .hudRack .returnLobbyBtn,
+    .hudRack .hudCombo {
+      pointer-events: auto;
+    }
+
+    .hudCombo {
       display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(12, 18, 28, 0.82), rgba(8, 12, 20, 0.78));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      max-width: min(360px, calc(100vw - 160px));
+      opacity: 0.92;
+    }
+
+    .hudRight {
+      display: grid;
+      justify-items: end;
+      align-items: start;
       gap: 10px;
     }
 
     .heartsHud,
     .xpHud {
-      padding: 12px 16px;
-      border-radius: 22px;
+      padding: 8px 10px;
+      border-radius: 16px;
       background:
-        linear-gradient(180deg, rgba(26, 40, 61, 0.96), rgba(12, 20, 33, 0.94));
-      border: 1px solid rgba(180, 219, 255, 0.18);
+        linear-gradient(180deg, rgba(28, 38, 56, 0.82), rgba(12, 18, 30, 0.82));
+      border: 1px solid rgba(180, 219, 255, 0.14);
       box-shadow:
-        0 18px 40px rgba(0,0,0,0.32),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      backdrop-filter: blur(10px);
+        inset 0 1px 0 rgba(255,255,255,0.05);
       color: white;
       user-select: none;
     }
 
     .heartsHud {
       display: grid;
-      gap: 10px;
-      min-width: 250px;
+      gap: 6px;
+      min-width: 0;
     }
 
     .hudTitle {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -73,17 +101,17 @@
     .heartsRow {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .heartChip {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      font-size: 19px;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      font-size: 16px;
       background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
       border: 1px solid rgba(255,255,255,0.12);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
@@ -106,14 +134,14 @@
 
     .heartsMeta {
       color: rgba(230, 239, 248, 0.9);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
     }
 
     .heartsExtra {
       margin-top: 2px;
-      padding: 10px 12px;
-      border-radius: 16px;
+      padding: 6px 8px;
+      border-radius: 12px;
       border: 1px solid rgba(255, 185, 129, 0.22);
       background:
         radial-gradient(circle at top right, rgba(255, 199, 120, 0.16), transparent 28%),
@@ -124,7 +152,7 @@
     }
 
     .heartsExtraTitle {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -132,13 +160,13 @@
     }
 
     .heartsExtraValue {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 1000;
       color: #fff8ef;
     }
 
     .heartsExtraMeta {
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.45;
       color: rgba(255, 235, 220, 0.82);
     }
@@ -147,12 +175,12 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 12px;
-      border-radius: 14px;
+      padding: 6px 8px;
+      border-radius: 12px;
       background: rgba(255, 193, 93, 0.12);
       border: 1px solid rgba(255, 193, 93, 0.45);
       color: #fff6db;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
     }
 
@@ -161,10 +189,25 @@
       line-height: 1;
     }
 
+    .adminHeartsWarningPreview {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255, 193, 93, 0.12);
+      border: 1px solid rgba(255, 193, 93, 0.45);
+      color: #fff6db;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .xpHud {
-      min-width: 320px;
+      min-width: 0;
+      width: 100%;
+      max-width: 300px;
       display: grid;
-      gap: 10px;
+      gap: 6px;
     }
 
     .xpTop {
@@ -179,13 +222,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 92px;
-      padding: 8px 12px;
-      border-radius: 14px;
+      min-width: 78px;
+      padding: 6px 10px;
+      border-radius: 12px;
       background:
         linear-gradient(180deg, rgba(162, 255, 100, 0.95), rgba(255, 226, 91, 0.92));
       color: #253000;
-      font-size: 15px;
+      font-size: 12px;
       font-weight: 900;
       box-shadow: 0 10px 22px rgba(171, 255, 88, 0.18);
     }
@@ -194,20 +237,20 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 110px;
-      padding: 8px 12px;
-      border-radius: 14px;
+      min-width: 88px;
+      padding: 6px 10px;
+      border-radius: 12px;
       background:
         linear-gradient(180deg, rgba(255, 214, 104, 0.95), rgba(255, 143, 67, 0.92));
       color: #4f2100;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 900;
       box-shadow: 0 10px 22px rgba(255, 180, 77, 0.18);
     }
 
     .xpText {
       color: #f7fbff;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 800;
       line-height: 1.45;
     }
@@ -224,7 +267,8 @@
 
     .xpBarWrap {
       width: 100%;
-      height: 16px;
+      max-width: 240px;
+      height: 9px;
       padding: 2px;
       border-radius: 999px;
       background: rgba(255,255,255,0.09);
@@ -235,20 +279,20 @@
 
     .xpBarWrap.xpWithIcon {
       position: relative;
-      padding-left: 34px;
+      padding-left: 22px;
     }
 
     .xpBarWrap.xpWithIcon::before {
       content: "";
       position: absolute;
-      left: 8px;
+      left: 5px;
       top: 50%;
       transform: translateY(-50%);
-      width: 24px;
-      height: 24px;
-      border-radius: 7px;
+      width: 14px;
+      height: 14px;
+      border-radius: 5px;
       background: url("assets/ui/xpicon.png") center/contain no-repeat;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
     }
 
     .boostIcon {
@@ -272,12 +316,12 @@
     .xpBar {
       width: 0%;
       height: 100%;
-      border-radius: 999px;
+      max-width: 100%;
+      border-radius: inherit;
       background:
         linear-gradient(90deg, #7dff4d 0%, #c9ff53 42%, #ffe76d 100%);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.28),
-        0 6px 16px rgba(191, 255, 87, 0.24);
+        inset 0 1px 0 rgba(255,255,255,0.28);
     }
 
     .helpBtn,
@@ -347,16 +391,15 @@
     }
 
     .topMenuDock {
-      position: fixed;
-      top: 12px;
-      right: 14px;
+      position: relative;
       z-index: 80;
       display: flex;
       justify-content: flex-end;
       flex-wrap: wrap;
       gap: 10px;
-      width: min(1040px, calc(100vw - 28px));
-      pointer-events: none;
+      width: fit-content;
+      max-width: 100%;
+      pointer-events: auto;
     }
 
     .topMenuDock > * {
@@ -1483,17 +1526,19 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 14px;
+      gap: 10px;
+      padding: 16px 16px 20px;
+      border-radius: 26px;
+      border: 1px solid rgba(10, 14, 22, 0.7);
       background:
-        radial-gradient(circle at top center, rgba(255, 213, 121, 0.12), transparent 24%),
-        linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)),
-        rgba(18, 26, 40, 0.88);
-      padding: 18px 18px 34px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.16);
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(50, 58, 74, 0.92), rgba(27, 34, 48, 0.96));
       box-shadow:
-        0 22px 52px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.08);
+        0 20px 46px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -10px 24px rgba(0,0,0,0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 0 0 1px rgba(8, 10, 16, 0.6);
       backdrop-filter: blur(10px);
       z-index: 20;
       overflow: hidden;
@@ -1508,32 +1553,43 @@
     }
 
     .hotbar::before {
-      inset: 12px 12px 18px;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      inset: 8px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
     }
 
     .hotbar::after {
-      inset: auto 18px 8px;
-      height: 5px;
+      inset: auto 16px 8px;
+      height: 4px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.24), rgba(255,255,255,0.05));
-      opacity: 0.7;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.2), rgba(255,255,255,0.04));
+      opacity: 0.6;
     }
 
     .slot {
-      width: 88px;
+      --slot-base: #5f6b7a;
+      --slot-top: #7f8ea3;
+      --slot-deep: #1a2231;
+      --slot-glow: rgba(255,255,255,0.16);
+      --slot-border: rgba(255,255,255,0.18);
+      width: 84px;
       height: 92px;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 22px;
+      border: 1px solid var(--slot-border);
+      border-radius: 20px;
       box-sizing: border-box;
       position: relative;
       background-clip: padding-box;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, var(--slot-top), var(--slot-base) 52%, var(--slot-deep));
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.06),
-        inset 0 -18px 24px rgba(0,0,0,0.18),
-        0 14px 24px rgba(0,0,0,0.24);
+        inset 0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 -18px 22px rgba(0,0,0,0.2),
+        0 12px 22px rgba(0,0,0,0.26);
       overflow: hidden;
       transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, filter 0.18s ease;
     }
@@ -1543,72 +1599,87 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.22), transparent 42%),
-        radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 34%);
+        linear-gradient(180deg, rgba(255,255,255,0.18), transparent 52%),
+        radial-gradient(circle at top right, var(--slot-glow), transparent 40%);
       pointer-events: none;
     }
 
     .slot::after {
       content: "";
       position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: -11px;
-      height: 22px;
+      inset: auto 12px 8px;
+      height: 6px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+      opacity: 0.7;
       pointer-events: none;
     }
 
     .slotLabel {
       position: absolute;
-      left: 12px;
-      top: 12px;
-      right: 12px;
+      left: 10px;
+      right: 10px;
+      top: 10px;
+      height: 22px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 12px;
       font-weight: 900;
-      color: rgba(255,255,255,0.96);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.82);
-      line-height: 1.1;
+      letter-spacing: 0.01em;
+      color: #f8fbff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.18);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      letter-spacing: 0.01em;
+    }
+
+    .slotLabel.isLong {
+      font-size: 10px;
+      letter-spacing: 0;
+    }
+
+    .slotLabel.isUltra {
+      font-size: 9px;
     }
 
     .slotSwatch {
       position: absolute;
-      left: 14px;
-      bottom: 14px;
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      border: 2px solid rgba(255,255,255,0.42);
+      left: 50%;
+      top: 40px;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 2px solid var(--slot-border);
       box-shadow:
         inset 0 0 0 1px rgba(0,0,0,0.12),
-        0 8px 18px rgba(0,0,0,0.14);
+        0 10px 18px rgba(0,0,0,0.18),
+        0 0 18px var(--slot-glow);
     }
 
     .slotCount {
       position: absolute;
-      right: 12px;
-      top: 46px;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
       min-width: 40px;
-      height: 40px;
-      font-size: 17px;
-      font-weight: 900;
-      color: white;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.9);
+      height: 32px;
       padding: 0 10px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(7, 15, 28, 0.74), rgba(7, 15, 28, 0.5));
-      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #f7fbff;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.9);
+      background: linear-gradient(180deg, rgba(10, 16, 26, 0.8), rgba(8, 12, 20, 0.6));
+      border: 1px solid rgba(255,255,255,0.16);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.18);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.2);
     }
 
     .slotKey {
@@ -1634,26 +1705,26 @@
     }
 
     .selected {
-      border-color: rgba(236, 242, 81, 0.9);
-      transform: translateY(-4px) scale(1.03);
+      border-color: rgba(236, 242, 81, 0.95);
+      transform: translateY(-3px) scale(1.03);
       box-shadow:
         0 0 0 1px rgba(236, 242, 81, 0.22),
-        0 0 24px rgba(218, 255, 95, 0.32),
+        0 0 26px rgba(218, 255, 95, 0.38),
         inset 0 0 0 1px rgba(255,255,255,0.08),
         0 16px 30px rgba(0,0,0,0.28);
       filter: brightness(1.06);
     }
 
     .selected .slotCount {
-      background: linear-gradient(180deg, rgba(12, 30, 18, 0.82), rgba(12, 30, 18, 0.56));
-      border-color: rgba(223, 255, 123, 0.34);
+      background: linear-gradient(180deg, rgba(18, 34, 20, 0.86), rgba(12, 22, 14, 0.6));
+      border-color: rgba(223, 255, 123, 0.4);
     }
 
     .selected .slotSwatch {
-      border-color: rgba(230,255,133,0.72);
+      border-color: rgba(230,255,133,0.78);
       box-shadow:
         inset 0 0 0 1px rgba(0,0,0,0.12),
-        0 0 20px rgba(222,255,116,0.2);
+        0 0 22px rgba(222,255,116,0.28);
     }
 
     .maintenanceOverlay {
@@ -8396,10 +8467,15 @@
     }
 
     .shopSections,
-    .skillGrid,
-    .adminGrid {
+    .skillGrid {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .adminGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
     }
 
@@ -8470,6 +8546,42 @@
       margin-bottom: 8px;
     }
 
+    .adminTabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 6px 4px 18px;
+    }
+
+    .adminTabBtn {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: #e9f3ff;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .adminTabBtn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(154, 224, 255, 0.28);
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    }
+
+    .adminTabBtn.active {
+      border-color: rgba(255, 191, 120, 0.5);
+      background:
+        linear-gradient(180deg, rgba(255, 191, 120, 0.2), rgba(88, 166, 255, 0.14));
+      color: #fff3df;
+      box-shadow: 0 14px 26px rgba(0,0,0,0.22);
+    }
+
     .adminStatusPill {
       padding: 12px 16px;
       border-radius: 999px;
@@ -8502,6 +8614,10 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    .adminButtonGrid.adminButtonGrid--tools {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .adminMiniGrid {
@@ -11939,6 +12055,22 @@
         linear-gradient(180deg, transparent, rgba(70, 46, 118, 0.28));
     }
 
+    .modePickerModeCard[data-mode="creative"] {
+      display: none;
+    }
+
+    .modePickerModeCard[data-mode="stealth"]::before {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(120, 255, 180, 0.32), transparent 42%),
+        linear-gradient(180deg, transparent, rgba(38, 86, 64, 0.28));
+    }
+
+    .modePickerModeCard[data-mode="dossier"]::before {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(140, 200, 255, 0.32), transparent 42%),
+        linear-gradient(180deg, transparent, rgba(46, 74, 118, 0.28));
+    }
+
 
     .modePickerModeCard:hover:not(:disabled) {
       transform: translateY(-5px);
@@ -12143,6 +12275,10 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 34px rgba(0,0,0,0.24);
       display: grid;
       gap: 12px;
+    }
+
+    .modePickerPublish {
+      display: none;
     }
 
     .modePublishRow {
@@ -12439,9 +12575,7 @@
     }
 
     .returnLobbyBtn {
-      position: fixed;
-      top: 88px;
-      right: 18px;
+      position: relative;
       z-index: 90;
       min-height: 52px;
       padding: 12px 18px;
@@ -12531,26 +12665,33 @@
       100% { opacity: 0; }
     }
 
-    body.startScreenActive .topHud,
-    body.startScreenActive .topHudLeft,
+    body.startScreenActive .hudRack,
+    body.startScreenActive .hudCombo,
     body.startScreenActive .heartsHud,
     body.startScreenActive .xpHud,
     body.startScreenActive .hotbar,
     body.startScreenActive .topMenuDock,
     body.startScreenActive .returnLobbyBtn,
-    body.lobbyMode .topHud,
-    body.lobbyMode .topHudLeft,
+    body.lobbyMode .hudCombo,
     body.lobbyMode .heartsHud,
     body.lobbyMode .xpHud,
     body.lobbyMode .hotbar {
       display: none !important;
     }
 
-    body.lobbyMode .topMenuDock {
+    body.lobbyMode .hudRack {
       top: 18px;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+
+
+    body.lobbyMode .hudRight {
+      justify-items: center;
+      width: 100%;
+    }
+
+    body.lobbyMode .topMenuDock {
       justify-content: center;
       width: min(1180px, calc(100vw - 40px));
       z-index: 95;
@@ -14185,9 +14326,6 @@
     }
 
     body.lobbyMode .topMenuDock {
-      top: 26px;
-      left: 50%;
-      transform: translateX(-50%);
       padding: 10px;
       border-radius: 999px;
       background: rgba(6, 10, 18, 0.76);
@@ -14494,10 +14632,8 @@
       }
 
       body.lobbyMode .topMenuDock {
-        top: 14px;
         width: calc(100vw - 28px);
         overflow-x: auto;
-        transform: translateX(-50%);
       }
     }
 
@@ -14680,6 +14816,58 @@
             <div class="modePickerModeStateText">Direkter Einstieg</div>
           </div>
         </button>
+        <button id="modeCardStealth" class="modePickerModeCard" type="button" data-pick-mode="stealth" data-mode="stealth">
+          <div class="modePickerModeTop">
+            <div class="modePickerModeHead">
+              <div>
+                <div class="modePickerModeKicker">Top Secret</div>
+                <div class="modePickerModeTitle">Tarn‑Modus</div>
+              </div>
+              <div class="modePickerModeBadgeRow">
+                <div class="modePickerModeBadge" data-mode-badge>Solo Event</div>
+              </div>
+            </div>
+            <div class="modePickerModeMeta">
+              <div class="modePickerMetaPill">Stealth Run</div>
+              <div class="modePickerMetaPill">Alarmstufe</div>
+            </div>
+          </div>
+          <div class="modePickerModeDesc">Schleiche durch die Sperrzone, ohne entdeckt zu werden. Jede Sichtung erhöht den Alarm.</div>
+          <div class="modePickerModeList">
+            <div>Tarn‑Akku mit Cooldown</div>
+            <div>Abbau bricht Tarnung</div>
+            <div>Bonus‑XP bei Null‑Alarm</div>
+          </div>
+          <div class="modePickerModeFooter">
+            <div class="modePickerModeStateText">Solo Spezial‑Event</div>
+          </div>
+        </button>
+        <button id="modeCardDossier" class="modePickerModeCard" type="button" data-pick-mode="dossier" data-mode="dossier">
+          <div class="modePickerModeTop">
+            <div class="modePickerModeHead">
+              <div>
+                <div class="modePickerModeKicker">Top Secret</div>
+                <div class="modePickerModeTitle">Akte‑Jagd</div>
+              </div>
+              <div class="modePickerModeBadgeRow">
+                <div class="modePickerModeBadge" data-mode-badge>Solo Mission</div>
+              </div>
+            </div>
+            <div class="modePickerModeMeta">
+              <div class="modePickerMetaPill">Dossiers</div>
+              <div class="modePickerMetaPill">Tresor‑Code</div>
+            </div>
+          </div>
+          <div class="modePickerModeDesc">Finde geheime Akten in den Biomen und setze den Code für den finalen Tresor zusammen.</div>
+          <div class="modePickerModeList">
+            <div>4–6 Akten pro Run</div>
+            <div>Hinweise als Code‑Fragmente</div>
+            <div>Finale Loot‑Kiste</div>
+          </div>
+          <div class="modePickerModeFooter">
+            <div class="modePickerModeStateText">Solo Spezial‑Event</div>
+          </div>
+        </button>
         <button id="modeCardCreative" class="modePickerModeCard" type="button" data-pick-mode="creative" data-mode="creative">
           <div class="modePickerModeTop">
             <div class="modePickerModeHead">
@@ -14726,8 +14914,6 @@
     </div>
   </div>
 
-  <button id="returnLobbyBtn" class="returnLobbyBtn hidden">Zurück</button>
-
   <div id="adminPanel" class="inventoryMenu hidden">
     <div class="inventoryBox adminPanelBox">
       <div class="adminHero">
@@ -14739,8 +14925,17 @@
         <div class="adminStatusPill">Season 7 Tools</div>
       </div>
 
+      <div class="adminTabs">
+        <button class="adminTabBtn active" data-admin-tab="all">Übersicht</button>
+        <button class="adminTabBtn" data-admin-tab="system">System</button>
+        <button class="adminTabBtn" data-admin-tab="events">Events</button>
+        <button class="adminTabBtn" data-admin-tab="shop">Shop</button>
+        <button class="adminTabBtn" data-admin-tab="player">Spieler</button>
+        <button class="adminTabBtn" data-admin-tab="tools">Tools</button>
+      </div>
+
       <div class="adminGrid">
-        <div class="adminSection">
+        <div class="adminSection" data-admin-section="system">
           <div class="adminSectionEyebrow">System</div>
           <div class="adminSectionTitle">Wartung & Modi</div>
 
@@ -14765,6 +14960,37 @@
               </div>
             </div>
             <div id="adminModeInfo" class="smallInfo"></div>
+          </div>
+
+          <div class="adminControlCard">
+            <div class="adminSectionEyebrow">Herzen-Warnung</div>
+            <input
+              id="adminHeartsWarningInput"
+              class="startInput"
+              type="text"
+              maxlength="160"
+              placeholder="Warntext unter den Herzen"
+            />
+            <select id="adminHeartsWarningScope" class="startInput">
+              <option value="all">Alle Modi</option>
+              <option value="solo">Nur Solo</option>
+              <option value="rift">Nur Rift-Rush</option>
+              <option value="creative">Nur Creative</option>
+              <option value="stealth">Nur Tarn-Modus</option>
+              <option value="dossier">Nur Akte-Jagd</option>
+            </select>
+            <div class="adminToggleRow">
+              <button id="adminHeartsWarningSaveBtn" class="achievementCloseBtn">Text speichern</button>
+              <button id="adminHeartsWarningResetBtn" class="achievementCloseBtn">Standard</button>
+            </div>
+            <div class="adminToggleRow">
+              <button id="adminHeartsWarningOnBtn" class="achievementCloseBtn">Warnung AN</button>
+              <button id="adminHeartsWarningOffBtn" class="achievementCloseBtn">Warnung AUS</button>
+            </div>
+            <div id="adminHeartsWarningPreview" class="adminHeartsWarningPreview">
+              <span class="warningIcon">⚠️</span><span>Vorschau</span>
+            </div>
+            <div id="adminHeartsWarningInfo" class="smallInfo"></div>
           </div>
 
           <div class="adminControlCard">
@@ -14810,6 +15036,16 @@
           </div>
 
           <div class="adminControlCard">
+            <div class="adminSectionEyebrow">Supabase Debug</div>
+            <div id="adminSupabaseInfo" class="smallInfo">Game-State Verbindung wird geprüft...</div>
+          </div>
+        </div>
+
+        <div class="adminSection" data-admin-section="events">
+          <div class="adminSectionEyebrow">Events</div>
+          <div class="adminSectionTitle">Live & Rabatte</div>
+
+          <div class="adminControlCard">
             <div class="adminSectionEyebrow">Live Events</div>
             <div class="adminMiniGrid">
               <div>
@@ -14845,11 +15081,6 @@
           </div>
 
           <div class="adminControlCard">
-            <div class="adminSectionEyebrow">Supabase Debug</div>
-            <div id="adminSupabaseInfo" class="smallInfo">Game-State Verbindung wird geprüft...</div>
-          </div>
-
-          <div class="adminControlCard">
             <div class="adminSectionEyebrow">Shop global</div>
             <input
               id="adminGlobalDiscountInput"
@@ -14867,7 +15098,7 @@
           </div>
         </div>
 
-        <div class="adminSection">
+        <div class="adminSection" data-admin-section="player">
           <div class="adminSectionEyebrow">Spieler</div>
           <div class="adminSectionTitle">Schnellaktionen & Fortschritt</div>
 
@@ -14884,6 +15115,11 @@
           </div>
 
           <div id="adminProgressInfo" class="smallInfo"></div>
+        </div>
+
+        <div class="adminSection" data-admin-section="shop">
+          <div class="adminSectionEyebrow">Shop</div>
+          <div class="adminSectionTitle">Angebote & Regeln</div>
 
           <div class="adminControlCard">
             <div class="adminSectionEyebrow">Shop-Angebot steuern</div>
@@ -14907,6 +15143,48 @@
             <div id="adminShopInfo" class="smallInfo"></div>
           </div>
         </div>
+
+        <div class="adminSection" data-admin-section="tools">
+          <div class="adminSectionEyebrow">Tools</div>
+          <div class="adminSectionTitle">Modus-Extras</div>
+
+          <div class="adminControlCard">
+            <div class="adminSectionEyebrow">OP-Modus</div>
+            <div class="adminToggleRow">
+              <button id="adminOpModeOnBtn" class="achievementCloseBtn">OP AN</button>
+              <button id="adminOpModeOffBtn" class="achievementCloseBtn">OP AUS</button>
+            </div>
+            <div id="adminOpModeInfo" class="smallInfo"></div>
+          </div>
+
+          <div class="adminControlCard">
+            <div class="adminSectionEyebrow">Floor-Lava</div>
+            <input
+              id="adminFloorLavaHeightInput"
+              class="startInput"
+              type="number"
+              min="2"
+              max="30"
+              placeholder="Höhe in Blöcken (z. B. 6)"
+            />
+            <div class="adminToggleRow">
+              <button id="adminFloorLavaOnBtn" class="achievementCloseBtn">AN</button>
+              <button id="adminFloorLavaOffBtn" class="achievementCloseBtn">AUS</button>
+            </div>
+            <div id="adminFloorLavaInfo" class="smallInfo"></div>
+          </div>
+
+          <div class="adminControlCard">
+            <div class="adminSectionEyebrow">Schnellaktionen</div>
+            <div class="adminButtonGrid adminButtonGrid--tools">
+              <button id="adminTeleportSpawnBtn" class="achievementCloseBtn">Teleport Spawn</button>
+              <button id="adminClearEffectsBtn" class="achievementCloseBtn">Effekte löschen</button>
+              <button id="adminForceSaveBtn" class="achievementCloseBtn">Spiel speichern</button>
+              <button id="adminRefreshUiBtn" class="achievementCloseBtn">UI aktualisieren</button>
+            </div>
+            <div id="adminToolsInfo" class="smallInfo"></div>
+          </div>
+        </div>
       </div>
 
       <div style="text-align:center; margin-top:18px;">
@@ -14915,22 +15193,55 @@
     </div>
   </div>
 
-  <div class="topHud" style="display:none;">
-    <div class="topHudLeft">
+  <div class="hudRack" style="display:none;">
+    <div class="hudCombo">
       <div class="heartsHud" id="heartsHud"></div>
-    </div>
-    <div class="xpHud">
-      <div class="xpTop">
-        <div class="hudTitle">Fortschritt</div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          <div id="xpPassBadge" class="xpPassBadge">Pass 1</div>
-          <div id="xpLevelBadge" class="xpLevelBadge">Level 1</div>
+      <div class="xpHud">
+        <div class="xpTop">
+          <div class="hudTitle">Fortschritt</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+            <div id="xpPassBadge" class="xpPassBadge">Pass 1</div>
+            <div id="xpLevelBadge" class="xpLevelBadge">Level 1</div>
+          </div>
+        </div>
+        <div id="xpText" class="xpText">XP 0/100 • Skillpunkte 0</div>
+        <div class="xpBarWrap xpWithIcon">
+          <div class="xpBar" id="xpBar"></div>
         </div>
       </div>
-      <div id="xpText" class="xpText">XP 0/100 • Skillpunkte 0</div>
-      <div class="xpBarWrap xpWithIcon">
-        <div class="xpBar" id="xpBar"></div>
+    </div>
+    <div class="hudRight">
+      <div class="topMenuDock" style="display:none;">
+        <div class="topMenuPrimary">
+          <button id="helpBtn" class="helpBtn">Tutorial!</button>
+          <button id="lockerBtn" class="lockerBtn">Spind</button>
+          <button id="passBtn" class="passBtn">
+            <span class="passBtnContent">
+              <span id="passBtnLabel" class="passBtnLabel">Riss-Pass</span>
+              <span id="passBtnTimer" class="passBtnTimer">Chapter 2 • S1 Riss-Zeit</span>
+            </span>
+          </button>
+          <button id="skillBtn" class="skillBtn">Skills</button>
+          <button id="shopBtn" class="shopBtn">Shop</button>
+          <button id="loreBtn" class="loreBtn">Lore</button>
+          <button id="leakBtn" class="creatorBtn">Leaks</button>
+          <div class="topMenuMoreWrap">
+            <button id="moreBtn" class="moreBtn">Mehr</button>
+            <div id="topMenuMorePanel" class="topMenuMorePanel hidden">
+              <button id="returnLobbyMoreBtn" class="returnLobbyMoreBtn hidden">Zurück</button>
+              <button id="questBtn" class="shopBtn">Quests</button>
+              <button id="equipmentBtn" class="lockerBtn">Ausrüstung</button>
+              <button id="crewBtn" class="creatorBtn">Minecraft Crew</button>
+              <button id="twitchBtn" class="creatorBtn">Twitch</button>
+              <button id="creatorBtn" class="creatorBtn">Creator</button>
+              <button id="craftBtn" class="craftBtn">Crafting</button>
+              <button id="achBtn" class="achBtn">Erfolge</button>
+              <button id="adminBtn" class="adminBtn">Admin</button>
+            </div>
+          </div>
+        </div>
       </div>
+      <button id="returnLobbyBtn" class="returnLobbyBtn hidden">Zurück</button>
     </div>
   </div>
 
@@ -15029,36 +15340,6 @@
     </div>
   </div>
 
-  <div class="topMenuDock" style="display:none;">
-    <div class="topMenuPrimary">
-      <button id="helpBtn" class="helpBtn">Tutorial!</button>
-      <button id="lockerBtn" class="lockerBtn">Spind</button>
-      <button id="passBtn" class="passBtn">
-        <span class="passBtnContent">
-          <span id="passBtnLabel" class="passBtnLabel">Riss-Pass</span>
-          <span id="passBtnTimer" class="passBtnTimer">Chapter 2 • S1 Riss-Zeit</span>
-        </span>
-      </button>
-      <button id="skillBtn" class="skillBtn">Skills</button>
-      <button id="shopBtn" class="shopBtn">Shop</button>
-      <button id="loreBtn" class="loreBtn">Lore</button>
-      <button id="leakBtn" class="creatorBtn">Leaks</button>
-      <div class="topMenuMoreWrap">
-        <button id="moreBtn" class="moreBtn">Mehr</button>
-        <div id="topMenuMorePanel" class="topMenuMorePanel hidden">
-          <button id="returnLobbyMoreBtn" class="returnLobbyMoreBtn hidden">Zurück</button>
-          <button id="questBtn" class="shopBtn">Quests</button>
-          <button id="equipmentBtn" class="lockerBtn">Ausrüstung</button>
-          <button id="crewBtn" class="creatorBtn">Minecraft Crew</button>
-          <button id="twitchBtn" class="creatorBtn">Twitch</button>
-          <button id="creatorBtn" class="creatorBtn">Creator</button>
-          <button id="craftBtn" class="craftBtn">Crafting</button>
-          <button id="achBtn" class="achBtn">Erfolge</button>
-          <button id="adminBtn" class="adminBtn">Admin</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <div id="lobbyBoostBar" class="lobbyBoostBar"></div>
   <div id="portalHint" class="portalHint hidden"></div>
 
@@ -15951,6 +16232,11 @@
     const MODE_ACCESS_KEY = "mini_minecraft_mode_access_v1";
     const EMERGENCY_STATE_KEY = "mini_minecraft_emergency_state_v1";
     const LIVE_EVENT_STATE_KEY = "mini_minecraft_live_event_state_v1";
+    const HEARTS_WARNING_KEY = "mini_minecraft_hearts_warning_v1";
+    const HEARTS_WARNING_DEFAULT = "Ingame update erst am 06.04.2026 im Lauf des Tages mit neuen Gameplay-Sachen.";
+    const HEARTS_WARNING_SCOPES = ["all", "solo", "rift", "creative", "stealth", "dossier"];
+    const OP_MODE_KEY = "mini_minecraft_op_mode_v1";
+    const FLOOR_LAVA_KEY = "mini_minecraft_floor_lava_v1";
     const PLAYER_ACCOUNTS_TABLE = "player_accounts";
     const PLAYER_SAVES_TABLE = "playersafe";
     const PLAYER_FRIENDS_TABLE = "player_friends";
@@ -15990,8 +16276,8 @@ document.getElementById("adminResetGlobalDiscountBtn").addEventListener("click",
     const loginAccountBtn = document.getElementById("loginAccountBtn");
     const startGameBtn = document.getElementById("startGameBtn");
     const startInfo = document.getElementById("startInfo");
-    const topHud = document.querySelector(".topHud");
-    const topHudLeft = document.querySelector(".topHudLeft");
+    const hudRack = document.querySelector(".hudRack");
+    const hudCombo = document.querySelector(".hudCombo");
     const xpHud = document.querySelector(".xpHud");
     const topMenuDock = document.querySelector(".topMenuDock");
     const lobbyScreen = document.getElementById("lobbyScreen");
@@ -16082,6 +16368,12 @@ document.getElementById("adminResetGlobalDiscountBtn").addEventListener("click",
     const adminModeNormalOnBtn = document.getElementById("adminModeNormalOnBtn");
     const adminModeNormalOffBtn = document.getElementById("adminModeNormalOffBtn");
     const adminModeInfo = document.getElementById("adminModeInfo");
+    const adminHeartsWarningInput = document.getElementById("adminHeartsWarningInput");
+    const adminHeartsWarningScope = document.getElementById("adminHeartsWarningScope");
+    const adminHeartsWarningSaveBtn = document.getElementById("adminHeartsWarningSaveBtn");
+    const adminHeartsWarningResetBtn = document.getElementById("adminHeartsWarningResetBtn");
+    const adminHeartsWarningOnBtn = document.getElementById("adminHeartsWarningOnBtn");
+    const adminHeartsWarningOffBtn = document.getElementById("adminHeartsWarningOffBtn");
     const adminEmergencyShopOnBtn = document.getElementById("adminEmergencyShopOnBtn");
     const adminEmergencyShopOffBtn = document.getElementById("adminEmergencyShopOffBtn");
     const adminEmergencyPassOnBtn = document.getElementById("adminEmergencyPassOnBtn");
@@ -16110,6 +16402,20 @@ document.getElementById("adminResetGlobalDiscountBtn").addEventListener("click",
     const adminApplyShopRuleBtn = document.getElementById("adminApplyShopRuleBtn");
     const adminResetShopRuleBtn = document.getElementById("adminResetShopRuleBtn");
     const adminShopInfo = document.getElementById("adminShopInfo");
+    const adminTabs = Array.from(document.querySelectorAll("[data-admin-tab]"));
+    const adminSections = Array.from(document.querySelectorAll("[data-admin-section]"));
+    const adminOpModeOnBtn = document.getElementById("adminOpModeOnBtn");
+    const adminOpModeOffBtn = document.getElementById("adminOpModeOffBtn");
+    const adminOpModeInfo = document.getElementById("adminOpModeInfo");
+    const adminFloorLavaOnBtn = document.getElementById("adminFloorLavaOnBtn");
+    const adminFloorLavaOffBtn = document.getElementById("adminFloorLavaOffBtn");
+    const adminFloorLavaHeightInput = document.getElementById("adminFloorLavaHeightInput");
+    const adminFloorLavaInfo = document.getElementById("adminFloorLavaInfo");
+    const adminTeleportSpawnBtn = document.getElementById("adminTeleportSpawnBtn");
+    const adminClearEffectsBtn = document.getElementById("adminClearEffectsBtn");
+    const adminForceSaveBtn = document.getElementById("adminForceSaveBtn");
+    const adminRefreshUiBtn = document.getElementById("adminRefreshUiBtn");
+    const adminToolsInfo = document.getElementById("adminToolsInfo");
 
     const ui = document.getElementById("ui");
     const hotbar = document.getElementById("hotbar");
@@ -16358,7 +16664,31 @@ const wishlistShopList = document.getElementById("wishlistShopList");
     let isThreeDMode = ENABLE_3D_MODE;
     let creativeLockUiTimer = null;
     let maintenanceRealtimeChannel = null;
-    let modeAccessState = { solo: true, rift: false, creative: true };
+    let modeAccessState = { solo: true, rift: false, creative: false };
+    const stealthState = {
+      active: false,
+      batteryMs: 12000,
+      maxBatteryMs: 12000,
+      cooldownMs: 0,
+      cooldownMaxMs: 8000
+    };
+    const alarmState = {
+      meter: 0,
+      level: 0,
+      levelMax: 3
+    };
+    const dossierState = {
+      active: false,
+      total: 0,
+      collected: 0,
+      positions: []
+    };
+    const vaultState = {
+      active: false,
+      opened: false,
+      x: 0,
+      y: 0
+    };
     const RIFT_RUSH_TARGET = 3;
     const RIFT_RUSH_TIME_LIMIT_MS = 3 * 60 * 1000;
     let riftRushState = { active: false, startAt: 0, portalsActivated: 0, completed: false };
@@ -16541,25 +16871,34 @@ function loadModeAccessStateLocal() {
 function getFirstAvailableLobbyMode() {
   if (modeAccessState.solo) return "solo";
   if (modeAccessState.rift) return "rift";
-  if (modeAccessState.creative && !isCreativeLobbyLocked()) return "creative";
   return "solo";
 }
 
 function ensureSelectedLobbyModeAvailable() {
-  if (selectedLobbyMode === "solo" && modeAccessState.solo) return;
+  if ((selectedLobbyMode === "solo" || selectedLobbyMode === "stealth" || selectedLobbyMode === "dossier") && modeAccessState.solo) return;
   if (selectedLobbyMode === "rift" && modeAccessState.rift) return;
-  if (selectedLobbyMode === "creative" && modeAccessState.creative && !isCreativeLobbyLocked()) return;
   selectedLobbyMode = getFirstAvailableLobbyMode();
 }
 
 function getLobbyModeLabel(mode) {
-  return mode === "rift" ? "Rift-Rush" : (mode === "creative" ? "Creative" : "Solo");
+  if (mode === "rift") return "Rift-Rush";
+  if (mode === "creative") return "Creative";
+  if (mode === "stealth") return "Tarn-Modus";
+  if (mode === "dossier") return "Akte-Jagd";
+  return "Solo";
+}
+
+function isStealthModeActive() {
+  return currentMatchMode === "stealth";
+}
+
+function isDossierModeActive() {
+  return currentMatchMode === "dossier";
 }
 
 function getRecommendedLobbyMode() {
   if (modeAccessState.solo) return "solo";
   if (modeAccessState.rift) return "rift";
-  if (modeAccessState.creative && !isCreativeLobbyLocked()) return "creative";
   return "solo";
 }
 
@@ -16580,7 +16919,7 @@ function applyModeAccessPayload(payload = {}) {
   modeAccessState = {
     solo: payload.solo !== false && payload.normal !== false,
     rift: payload.rift !== false,
-    creative: payload.creative !== false
+    creative: false
   };
   ensureSelectedLobbyModeAvailable();
   updateAdminModeInfo();
@@ -16770,6 +17109,157 @@ function updateGlobalDiscountInfo() {
       communityBoost: false,
       shopDiscount: false
     };
+
+    let heartsWarningState = {
+      active: true,
+      text: HEARTS_WARNING_DEFAULT,
+      scope: "all"
+    };
+
+    function normalizeHeartsWarningText(value) {
+      const text = String(value || "").trim();
+      return text.slice(0, 160);
+    }
+
+    function normalizeHeartsWarningScope(value) {
+      const scope = String(value || "all").trim().toLowerCase();
+      return HEARTS_WARNING_SCOPES.includes(scope) ? scope : "all";
+    }
+
+    function getHeartsWarningModeLabel(scope) {
+      const labels = {
+        all: "Alle Modi",
+        solo: "Solo",
+        rift: "Rift-Rush",
+        creative: "Creative",
+        stealth: "Tarn-Modus",
+        dossier: "Akte-Jagd"
+      };
+      return labels[scope] || "Alle Modi";
+    }
+
+    function updateAdminHeartsWarningInfo() {
+      const info = document.getElementById("adminHeartsWarningInfo");
+      const preview = document.getElementById("adminHeartsWarningPreview");
+      if (!info) return;
+      const status = heartsWarningState.active ? "AN" : "AUS";
+      const previewText = heartsWarningState.text ? `Text: ${heartsWarningState.text}` : "Kein Text gesetzt.";
+      info.textContent = `Warnung ${status} • Modus: ${getHeartsWarningModeLabel(heartsWarningState.scope)}. ${previewText}`;
+      if (preview) {
+        preview.innerHTML = `<span class="warningIcon">⚠️</span><span>${heartsWarningState.text || HEARTS_WARNING_DEFAULT}</span>`;
+      }
+    }
+
+    function saveHeartsWarningStateLocal() {
+      localStorage.setItem(HEARTS_WARNING_KEY, JSON.stringify(heartsWarningState));
+    }
+
+    function loadHeartsWarningStateLocal() {
+      try {
+        const raw = localStorage.getItem(HEARTS_WARNING_KEY);
+        if (!raw) return;
+        applyHeartsWarningPayload(JSON.parse(raw));
+      } catch {}
+    }
+
+    function applyHeartsWarningPayload(payload = {}) {
+      const hasActive = payload.active !== undefined || payload.hearts_warning_active !== undefined;
+      const hasText = payload.text !== undefined || payload.hearts_warning_text !== undefined;
+      const hasScope = payload.scope !== undefined || payload.hearts_warning_scope !== undefined;
+      const nextActive = hasActive
+        ? (payload.active === true || payload.hearts_warning_active === true)
+        : heartsWarningState.active;
+      const nextText = hasText
+        ? (payload.text ?? payload.hearts_warning_text ?? "")
+        : (heartsWarningState.text ?? HEARTS_WARNING_DEFAULT);
+      const nextScope = hasScope
+        ? normalizeHeartsWarningScope(payload.scope ?? payload.hearts_warning_scope)
+        : normalizeHeartsWarningScope(heartsWarningState.scope);
+      heartsWarningState = {
+        active: nextActive,
+        text: normalizeHeartsWarningText(nextText) || HEARTS_WARNING_DEFAULT,
+        scope: nextScope
+      };
+      updateAdminHeartsWarningInfo();
+      saveHeartsWarningStateLocal();
+      updateHeartsHud();
+    }
+
+    function buildHeartsWarningSupabasePayload() {
+      return {
+        hearts_warning_state: heartsWarningState,
+        hearts_warning_active: !!heartsWarningState.active,
+        hearts_warning_text: heartsWarningState.text,
+        hearts_warning_scope: heartsWarningState.scope
+      };
+    }
+
+    async function saveHeartsWarningStateToSupabase() {
+      if (!supabaseClient) return false;
+      try {
+        const { error } = await supabaseClient
+          .from(GAME_STATE_TABLE)
+          .upsert({
+            id: GAME_STATE_ID,
+            ...buildHeartsWarningSupabasePayload()
+          }, { onConflict: "id" });
+        if (error) throw error;
+        return true;
+      } catch (err) {
+        console.warn("Herzen-Warnung konnte nicht nach Supabase gespeichert werden:", err);
+        return false;
+      }
+    }
+
+    async function applyHeartsWarningActive(active) {
+      heartsWarningState.active = !!active;
+      applyHeartsWarningPayload(heartsWarningState);
+      const synced = await saveHeartsWarningStateToSupabase();
+      showMessage(synced
+        ? `Herzen-Warnung ${active ? "aktiviert" : "deaktiviert"}! (Live-Sync aktiv)`
+        : `Herzen-Warnung ${active ? "aktiviert" : "deaktiviert"}! (nur lokal gespeichert)`, 2200);
+    }
+
+    async function saveHeartsWarningText() {
+      if (!adminHeartsWarningInput) return;
+      const nextText = normalizeHeartsWarningText(adminHeartsWarningInput.value) || HEARTS_WARNING_DEFAULT;
+      heartsWarningState.text = nextText;
+      applyHeartsWarningPayload(heartsWarningState);
+      const synced = await saveHeartsWarningStateToSupabase();
+      showMessage(synced
+        ? "Herzen-Warntext gespeichert! (Live-Sync aktiv)"
+        : "Herzen-Warntext gespeichert! (nur lokal gespeichert)", 2200);
+    }
+
+    async function resetHeartsWarningText() {
+      heartsWarningState.text = HEARTS_WARNING_DEFAULT;
+      if (adminHeartsWarningInput) adminHeartsWarningInput.value = HEARTS_WARNING_DEFAULT;
+      applyHeartsWarningPayload(heartsWarningState);
+      const synced = await saveHeartsWarningStateToSupabase();
+      showMessage(synced
+        ? "Herzen-Warntext auf Standard gesetzt! (Live-Sync aktiv)"
+        : "Herzen-Warntext auf Standard gesetzt! (nur lokal gespeichert)", 2200);
+    }
+
+    async function saveHeartsWarningScope(scope) {
+      heartsWarningState.scope = normalizeHeartsWarningScope(scope);
+      applyHeartsWarningPayload(heartsWarningState);
+      const synced = await saveHeartsWarningStateToSupabase();
+      showMessage(synced
+        ? "Herzen-Warnung Modus gespeichert! (Live-Sync aktiv)"
+        : "Herzen-Warnung Modus gespeichert! (nur lokal gespeichert)", 2000);
+    }
+
+    function getActiveHeartsWarningMode() {
+      if (typeof currentMatchMode === "string" && currentMatchMode) return currentMatchMode;
+      return selectedLobbyMode || "solo";
+    }
+
+    function isHeartsWarningAllowedForMode(mode) {
+      const scope = heartsWarningState.scope || "all";
+      if (scope === "all") return true;
+      return scope === mode;
+    }
 
     function getActiveLiveEventEntries() {
       return [
@@ -17433,6 +17923,13 @@ let shopWishlist = [];
       speed: 0,
       jump: 0,
       shield: 0
+    };
+
+    let opModeEnabled = false;
+    const floorLavaState = {
+      enabled: false,
+      height: 6,
+      damageTick: 0
     };
 
     const weatherState = {
@@ -20492,16 +20989,139 @@ let shopWishlist = [];
       }
     }
 
+    function setActiveAdminTab(target) {
+      const normalized = target || "all";
+      adminTabs.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.adminTab === normalized);
+      });
+      adminSections.forEach((section) => {
+        const sectionKey = section.dataset.adminSection || "";
+        const shouldShow = normalized === "all" || sectionKey === normalized;
+        section.classList.toggle("hidden", !shouldShow);
+      });
+    }
+
+    function bindAdminTabs() {
+      if (!adminTabs.length) return;
+      adminTabs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setActiveAdminTab(btn.dataset.adminTab || "all");
+        });
+      });
+    }
+
+    function loadAdminToolsState() {
+      try {
+        const raw = localStorage.getItem(FLOOR_LAVA_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (typeof parsed.enabled === "boolean") floorLavaState.enabled = parsed.enabled;
+          if (Number.isFinite(parsed.height)) floorLavaState.height = Math.max(2, Math.min(30, Number(parsed.height)));
+        }
+      } catch {}
+
+      opModeEnabled = localStorage.getItem(OP_MODE_KEY) === "1";
+    }
+
+    function saveAdminToolsState() {
+      localStorage.setItem(OP_MODE_KEY, opModeEnabled ? "1" : "0");
+      localStorage.setItem(FLOOR_LAVA_KEY, JSON.stringify({
+        enabled: floorLavaState.enabled,
+        height: floorLavaState.height
+      }));
+    }
+
+    function updateAdminOpModeInfo() {
+      if (!adminOpModeInfo) return;
+      adminOpModeInfo.textContent = opModeEnabled ? "OP-Modus aktiv." : "OP-Modus aus.";
+    }
+
+    function updateAdminFloorLavaInfo() {
+      if (!adminFloorLavaInfo) return;
+      adminFloorLavaInfo.textContent = floorLavaState.enabled
+        ? `Floor-Lava aktiv • Höhe ${floorLavaState.height} Blöcke.`
+        : "Floor-Lava aus.";
+    }
+
+    function updateAdminToolsInfo(text = "") {
+      if (!adminToolsInfo) return;
+      adminToolsInfo.textContent = text;
+    }
+
+    function setOpModeEnabled(enabled) {
+      opModeEnabled = !!enabled;
+      saveAdminToolsState();
+      updateAdminOpModeInfo();
+      updateDerivedStats();
+      updateAdminToolsInfo(opModeEnabled ? "OP-Modus aktiviert." : "OP-Modus deaktiviert.");
+    }
+
+    function setFloorLavaEnabled(enabled) {
+      floorLavaState.enabled = !!enabled;
+      saveAdminToolsState();
+      updateAdminFloorLavaInfo();
+      updateAdminToolsInfo(floorLavaState.enabled ? "Floor-Lava aktiviert." : "Floor-Lava deaktiviert.");
+    }
+
+    function setFloorLavaHeight(value) {
+      if (!Number.isFinite(value)) return;
+      floorLavaState.height = Math.max(2, Math.min(30, Math.round(value)));
+      saveAdminToolsState();
+      updateAdminFloorLavaInfo();
+    }
+
+    function teleportPlayerToSpawn() {
+      respawnPlayer();
+      showMessage("Teleport zum Spawn.", 1600);
+      updateAdminToolsInfo("Spieler zum Spawn teleportiert.");
+    }
+
+    function clearActiveEffects() {
+      effects.speed = 0;
+      effects.jump = 0;
+      effects.shield = 0;
+      renderEffects();
+      updateDerivedStats();
+      showMessage("Effekte entfernt.", 1600);
+      updateAdminToolsInfo("Aktive Effekte gelöscht.");
+    }
+
+    function forceSaveGame() {
+      saveGame();
+      showMessage("Spiel gespeichert.", 1600);
+      updateAdminToolsInfo("Spielstand gespeichert.");
+    }
+
+    function refreshUiNow() {
+      renderInventory();
+      renderShop();
+      renderSkills();
+      renderLocker();
+      renderBattlePass();
+      renderEffects();
+      updateLobbyUi();
+      updateUI();
+      updateAdminToolsInfo("UI neu geladen.");
+    }
+
     function openAdminPanel() {
-  adminPanel.classList.remove("hidden");
-  refreshAdminShopItems();
-  updateGlobalDiscountInfo();
-  updateAdminMaintenanceInfo();
-  updateAdminModeInfo();
-  updateAdminEmergencyInfo();
-  updateAdminLiveEventInfo();
-  updateAdminProgressInfo();
-}
+      adminPanel.classList.remove("hidden");
+      setActiveAdminTab("all");
+      refreshAdminShopItems();
+      updateGlobalDiscountInfo();
+      updateAdminMaintenanceInfo();
+      updateAdminModeInfo();
+      updateAdminHeartsWarningInfo();
+      updateAdminEmergencyInfo();
+      updateAdminLiveEventInfo();
+      updateAdminProgressInfo();
+      updateAdminOpModeInfo();
+      updateAdminFloorLavaInfo();
+      if (adminFloorLavaHeightInput) adminFloorLavaHeightInput.value = String(floorLavaState.height);
+      if (adminHeartsWarningInput) adminHeartsWarningInput.value = heartsWarningState.text || HEARTS_WARNING_DEFAULT;
+      if (adminHeartsWarningScope) adminHeartsWarningScope.value = heartsWarningState.scope || "all";
+      updateAdminToolsInfo("");
+    }
 
     function closeAdminPanel() {
       adminPanel.classList.add("hidden");
@@ -22680,10 +23300,18 @@ let shopWishlist = [];
         data.event_community_boost !== undefined ||
         data.event_shop_discount !== undefined
       );
+      const hasHeartsWarningState = data && (
+        data.hearts_warning_active !== undefined ||
+        data.hearts_warning_text !== undefined ||
+        data.hearts_warning_scope !== undefined
+      );
 
       applyModeAccessPayload(hasFlatModeState ? createFlatModeStatePayload(data) : (data?.mode_state || {}));
       applyEmergencyStatePayload(hasFlatEmergencyState ? createFlatEmergencyStatePayload(data) : (data?.emergency_state || {}));
       applyLiveEventStatePayload(hasFlatLiveEventState ? createFlatLiveEventStatePayload(data) : (data?.live_event_state || {}));
+      applyHeartsWarningPayload(hasHeartsWarningState
+        ? { active: data.hearts_warning_active, text: data.hearts_warning_text, scope: data.hearts_warning_scope }
+        : (data?.hearts_warning_state || {}));
 
       if (data) {
         applyShopAdminStatePayload({
@@ -22766,14 +23394,14 @@ async function loadMaintenanceStateFromSupabase() {
   try {
     let { data, error } = await supabaseClient
       .from(GAME_STATE_TABLE)
-      .select("maintenance_active, mode_state, mode_solo_enabled, mode_rift_enabled, mode_creative_enabled, emergency_state, emergency_shop, emergency_battle_pass, emergency_quests, emergency_creator, emergency_twitch, live_event_state, event_xp_boost, event_pass_boost, event_community_boost, event_shop_discount, global_shop_discount, shop_state, community_event_state")
+      .select("maintenance_active, mode_state, mode_solo_enabled, mode_rift_enabled, mode_creative_enabled, emergency_state, emergency_shop, emergency_battle_pass, emergency_quests, emergency_creator, emergency_twitch, live_event_state, event_xp_boost, event_pass_boost, event_community_boost, event_shop_discount, hearts_warning_state, hearts_warning_active, hearts_warning_text, hearts_warning_scope, global_shop_discount, shop_state, community_event_state")
       .eq("id", GAME_STATE_ID)
       .maybeSingle();
 
     if (!error && !data) {
       const fallback = await supabaseClient
         .from(GAME_STATE_TABLE)
-        .select("maintenance_active, mode_state, mode_solo_enabled, mode_rift_enabled, mode_creative_enabled, emergency_state, emergency_shop, emergency_battle_pass, emergency_quests, emergency_creator, emergency_twitch, live_event_state, event_xp_boost, event_pass_boost, event_community_boost, event_shop_discount, global_shop_discount, shop_state, community_event_state")
+        .select("maintenance_active, mode_state, mode_solo_enabled, mode_rift_enabled, mode_creative_enabled, emergency_state, emergency_shop, emergency_battle_pass, emergency_quests, emergency_creator, emergency_twitch, live_event_state, event_xp_boost, event_pass_boost, event_community_boost, event_shop_discount, hearts_warning_state, hearts_warning_active, hearts_warning_text, hearts_warning_scope, global_shop_discount, shop_state, community_event_state")
         .order("id", { ascending: true })
         .limit(1)
         .maybeSingle();
@@ -23017,14 +23645,14 @@ async function loadMaintenanceStateFromSupabase() {
         };
         enforceLobbyPartyLimit();
       }
-      if (parsed.selectedLobbyMode === "solo" || parsed.selectedLobbyMode === "rift" || parsed.selectedLobbyMode === "creative") {
-        selectedLobbyMode = parsed.selectedLobbyMode;
+      if (parsed.selectedLobbyMode === "solo" || parsed.selectedLobbyMode === "rift" || parsed.selectedLobbyMode === "creative" || parsed.selectedLobbyMode === "stealth" || parsed.selectedLobbyMode === "dossier") {
+        selectedLobbyMode = parsed.selectedLobbyMode === "creative" ? "solo" : parsed.selectedLobbyMode;
         ensureSelectedLobbyModeAvailable();
       } else {
         selectedLobbyMode = "solo";
       }
-      if (parsed.lastPlayedLobbyMode === "solo" || parsed.lastPlayedLobbyMode === "rift" || parsed.lastPlayedLobbyMode === "creative") {
-        lastPlayedLobbyMode = parsed.lastPlayedLobbyMode;
+      if (parsed.lastPlayedLobbyMode === "solo" || parsed.lastPlayedLobbyMode === "rift" || parsed.lastPlayedLobbyMode === "creative" || parsed.lastPlayedLobbyMode === "stealth" || parsed.lastPlayedLobbyMode === "dossier") {
+        lastPlayedLobbyMode = parsed.lastPlayedLobbyMode === "creative" ? "" : parsed.lastPlayedLobbyMode;
       } else {
         lastPlayedLobbyMode = "";
       }
@@ -24757,11 +25385,11 @@ async function loadMaintenanceStateFromSupabase() {
     }
 
     function isOpModeActive() {
-      return false;
+      return opModeEnabled;
     }
 
     function isFloorLavaModeActive() {
-      return false;
+      return floorLavaState.enabled;
     }
 
     function renderInventory() {
@@ -24966,6 +25594,32 @@ async function loadMaintenanceStateFromSupabase() {
         oscB.connect(gain);
         oscB.start(now + 0.02);
         oscB.stop(now + 0.2);
+      } catch {}
+    }
+
+    function playStealthToggleSound(isOn) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+
+      try {
+        if (!playStealthToggleSound.ctx) playStealthToggleSound.ctx = new AudioCtx();
+        const ctx = playStealthToggleSound.ctx;
+        if (ctx.state === "suspended") ctx.resume();
+
+        const now = ctx.currentTime;
+        const gain = ctx.createGain();
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.05, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+
+        const osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(isOn ? 720 : 420, now);
+        osc.frequency.exponentialRampToValueAtTime(isOn ? 980 : 320, now + 0.22);
+        osc.connect(gain);
+        osc.start(now);
+        osc.stop(now + 0.3);
       } catch {}
     }
 
@@ -25641,7 +26295,9 @@ async function loadMaintenanceStateFromSupabase() {
       const recommendedMode = getRecommendedLobbyMode();
       const creativeLocked = isCreativeLobbyLocked();
       const creativeEnabled = modeAccessState.creative && !creativeLocked;
-      const enabledModeCount = [modeAccessState.solo, modeAccessState.rift, creativeEnabled].filter(Boolean).length;
+      const stealthEnabled = modeAccessState.solo;
+      const dossierEnabled = modeAccessState.solo;
+      const enabledModeCount = [modeAccessState.solo, modeAccessState.rift, creativeEnabled, stealthEnabled, dossierEnabled].filter(Boolean).length;
       ensureSelectedLobbyModeAvailable();
       const selectedModeAvailable = !ended && (
         selectedLobbyMode === "rift"
@@ -25666,6 +26322,8 @@ async function loadMaintenanceStateFromSupabase() {
       if (modePickerLiveMeta) {
         const liveLabels = [
           modeAccessState.solo ? "Solo" : null,
+          stealthEnabled ? "Tarn-Modus" : null,
+          dossierEnabled ? "Akte-Jagd" : null,
           modeAccessState.rift ? "Rift-Rush" : null,
           creativeEnabled ? "Creative" : null
         ].filter(Boolean);
@@ -25694,10 +26352,14 @@ async function loadMaintenanceStateFromSupabase() {
           const footer = button.querySelector(".modePickerModeStateText");
           const isSelected = mode === selectedLobbyMode;
           const isRecommended = mode === recommendedMode;
-          const isPlayableMode = mode === "solo" || mode === "rift" || mode === "creative";
+          const isPlayableMode = mode === "solo" || mode === "rift" || mode === "creative" || mode === "stealth" || mode === "dossier";
           const isModeEnabled = mode === "solo"
             ? modeAccessState.solo
-            : (mode === "rift" ? modeAccessState.rift : (mode === "creative" ? creativeEnabled : false));
+            : (mode === "rift"
+              ? modeAccessState.rift
+              : (mode === "creative"
+                ? creativeEnabled
+                : (mode === "stealth" ? stealthEnabled : (mode === "dossier" ? dossierEnabled : false))));
           const isLocked = ended || !isModeEnabled || !isPlayableMode;
           const isModeOver = mode === "rift" && !modeAccessState.rift;
           const isExpiring = mode === "rift" && !isModeOver;
@@ -25771,6 +26433,10 @@ async function loadMaintenanceStateFromSupabase() {
               footer.textContent = "Vom Admin-Menü gesperrt";
             } else if (mode === "creative") {
               footer.textContent = "Bau frei und veroeffentliche deine Insel";
+            } else if (mode === "stealth") {
+              footer.textContent = "Tarnung halten, Alarm niedrig halten";
+            } else if (mode === "dossier") {
+              footer.textContent = "Akten finden, Tresor knacken";
             } else if (mode === "rift") {
               footer.textContent = "3 Portale aktivieren, bevor die Zeit endet";
             } else {
@@ -25850,12 +26516,19 @@ async function loadMaintenanceStateFromSupabase() {
         showMessage(`Season 7 ist seit ${BATTLE_PASS_END_LABEL} beendet.`, 2600);
         return;
       }
-      const targetMode = mode === "rift" ? "rift" : (mode === "creative" ? "creative" : "solo");
+      const targetMode = mode === "rift"
+        ? "rift"
+        : (mode === "creative"
+          ? "creative"
+          : (mode === "stealth"
+            ? "stealth"
+            : (mode === "dossier" ? "dossier" : "solo")));
       if (targetMode === "creative" && isCreativeLobbyLocked()) {
         showMessage(getCreativeLockText(), 3200);
         return;
       }
-      if (!modeAccessState[targetMode]) {
+      const accessKey = (targetMode === "stealth" || targetMode === "dossier") ? "solo" : targetMode;
+      if (!modeAccessState[accessKey]) {
         showMessage("Dieser Modus ist aktuell im Admin-Menü deaktiviert.", 2400);
         return;
       }
@@ -25872,20 +26545,26 @@ async function loadMaintenanceStateFromSupabase() {
       showMessage(
         selectedLobbyMode === "rift"
           ? "Rift-Rush ausgewählt!"
-          : (selectedLobbyMode === "creative" ? "Creative ausgewählt!" : "Solo ausgewählt!"),
+          : (selectedLobbyMode === "creative"
+            ? "Creative ausgewählt!"
+            : (selectedLobbyMode === "stealth"
+              ? "Tarn-Modus ausgewählt!"
+              : (selectedLobbyMode === "dossier" ? "Akte-Jagd ausgewählt!" : "Solo ausgewählt!"))),
         1800
       );
     }
 
-    function resetFloorLavaState() {}
+    function resetFloorLavaState() {
+      floorLavaState.damageTick = 0;
+    }
 
     function isSkySurvivalActive() {
       return false;
     }
 
-    function isCreativeModeActive() {
-      return currentMatchMode === "creative";
-    }
+function isCreativeModeActive() {
+  return false;
+}
 
     function areSkillsDisabledInCurrentMode() {
       return false;
@@ -26375,7 +27054,27 @@ async function loadMaintenanceStateFromSupabase() {
       }
     }
 
-    function updateFloorLavaMode() {}
+    function getFloorLavaSurfaceY() {
+      const heightBlocks = Math.max(2, Math.min(30, floorLavaState.height || 6));
+      return (WORLD_HEIGHT - heightBlocks) * TILE;
+    }
+
+    function updateFloorLavaMode() {
+      if (!isFloorLavaModeActive()) {
+        floorLavaState.damageTick = 0;
+        return;
+      }
+      const surfaceY = getFloorLavaSurfaceY();
+      if (player.y + player.h >= surfaceY) {
+        floorLavaState.damageTick++;
+        if (floorLavaState.damageTick >= 24) {
+          floorLavaState.damageTick = 0;
+          damagePlayer(2);
+        }
+      } else {
+        floorLavaState.damageTick = 0;
+      }
+    }
 
     function updateVolcanoLavaMode() {
       if (!isVolcanoSeasonActive()) {
@@ -26396,7 +27095,28 @@ async function loadMaintenanceStateFromSupabase() {
       }
     }
 
-    function drawFloorLava(cam) {}
+    function drawFloorLava(cam) {
+      if (!isFloorLavaModeActive()) return;
+      const surfaceY = getFloorLavaSurfaceY();
+      const screenY = surfaceY - cam.y;
+      if (screenY > canvas.height) return;
+
+      ctx.save();
+      const fillStartY = Math.max(-30, screenY);
+      const lavaGradient = ctx.createLinearGradient(0, fillStartY, 0, canvas.height);
+      lavaGradient.addColorStop(0, "rgba(255, 140, 80, 0.45)");
+      lavaGradient.addColorStop(0.18, "rgba(255, 84, 40, 0.85)");
+      lavaGradient.addColorStop(1, "rgba(96, 18, 8, 0.96)");
+      ctx.fillStyle = lavaGradient;
+      ctx.fillRect(0, fillStartY, canvas.width, canvas.height - fillStartY);
+
+      ctx.fillStyle = "rgba(255, 210, 160, 0.8)";
+      for (let i = 0; i < canvas.width; i += 36) {
+        const waveY = fillStartY + Math.sin((Date.now() / 240) + i * 0.06) * 3;
+        ctx.fillRect(i, waveY, 22, 2);
+      }
+      ctx.restore();
+    }
 
     function drawVolcanoLava(cam) {
       if (!isVolcanoSeasonActive()) return;
@@ -26454,12 +27174,204 @@ async function loadMaintenanceStateFromSupabase() {
           <div class="modeRulesItem">Test-Modus per Taste T</div>
           <div class="modeRulesItem">Publish in der Modus-Auswahl</div>
         `;
+      } else if (selectedLobbyMode === "stealth") {
+        modeRulesTitle.textContent = "Tarn-Modus";
+        modeRulesLead.textContent = "Bleib im Schatten und verhindere Alarm. Jede Sichtung erhöht die Gefahrenstufe.";
+        modeRulesList.innerHTML = `
+          <div class="modeRulesItem">Tarn-Akku: kurz aktiv, dann Cooldown</div>
+          <div class="modeRulesItem">Taste C toggelt die Tarnung</div>
+          <div class="modeRulesItem">Abbau/Angriff bricht Tarnung</div>
+          <div class="modeRulesItem">Bonus-XP bei Null-Alarm</div>
+        `;
+      } else if (selectedLobbyMode === "dossier") {
+        modeRulesTitle.textContent = "Akte-Jagd";
+        modeRulesLead.textContent = "Sammle geheime Akten und setze den Code für den Tresor zusammen.";
+        modeRulesList.innerHTML = `
+          <div class="modeRulesItem">4–6 Akten pro Run</div>
+          <div class="modeRulesItem">Hinweise als Code-Fragmente</div>
+          <div class="modeRulesItem">Finale Loot-Kiste im Tresor</div>
+        `;
       } else {
         return false;
       }
       closeMenus("modeRules");
       modeRulesMenu.classList.remove("hidden");
       return true;
+    }
+
+    function initDossierHunt() {
+      dossierState.active = true;
+      dossierState.collected = 0;
+      dossierState.positions = [];
+      dossierState.total = 4 + Math.floor(Math.random() * 3);
+      const used = new Set();
+      let attempts = 0;
+      while (dossierState.positions.length < dossierState.total && attempts < 500) {
+        attempts++;
+        const x = Math.floor(Math.random() * (WORLD_WIDTH - 10)) + 5;
+        if (used.has(x)) continue;
+        let y = -1;
+        for (let iy = 0; iy < WORLD_HEIGHT - 1; iy++) {
+          if (world[iy][x] === 0 && world[iy + 1][x] !== 0) {
+            y = iy;
+            break;
+          }
+        }
+        if (y === -1) continue;
+        used.add(x);
+        dossierState.positions.push({ x, y });
+      }
+      if (!dossierState.positions.length) {
+        dossierState.active = false;
+        dossierState.total = 0;
+      }
+    }
+
+    function resetDossierHunt() {
+      dossierState.active = false;
+      dossierState.total = 0;
+      dossierState.collected = 0;
+      dossierState.positions = [];
+      vaultState.active = false;
+      vaultState.opened = false;
+    }
+
+    function checkDossierPickup() {
+      if (!dossierState.active || !dossierState.positions.length) return;
+      const px = Math.floor((player.x + player.w / 2) / TILE);
+      const py = Math.floor((player.y + player.h / 2) / TILE);
+      for (let i = dossierState.positions.length - 1; i >= 0; i--) {
+        const pos = dossierState.positions[i];
+        if (Math.abs(pos.x - px) <= 1 && Math.abs(pos.y - py) <= 1) {
+          dossierState.positions.splice(i, 1);
+          dossierState.collected++;
+          addXp(12);
+          showMessage(`Akte gesichert (${dossierState.collected}/${dossierState.total})`, 1400);
+          if (dossierState.collected >= dossierState.total) {
+            addXp(60);
+            activateVaultReward();
+            showMessage("Tresor-Code komplett! Finaler Tresor freigeschaltet.", 2000);
+          }
+        }
+      }
+    }
+
+    function drawDossierMarkers(cam) {
+      if (!dossierState.active || !dossierState.positions.length) return;
+      const pulse = 0.55 + Math.sin(Date.now() / 220) * 0.25;
+      ctx.save();
+      for (const pos of dossierState.positions) {
+        const sx = pos.x * TILE - cam.x;
+        const sy = pos.y * TILE - cam.y;
+        if (sx < -TILE || sy < -TILE || sx > canvas.width + TILE || sy > canvas.height + TILE) continue;
+        ctx.fillStyle = `rgba(120, 220, 255, ${pulse})`;
+        ctx.fillRect(sx + 10, sy + 8, 12, 16);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${pulse})`;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(sx + 8, sy + 6, 16, 20);
+      }
+      ctx.restore();
+    }
+
+    function activateVaultReward() {
+      vaultState.active = true;
+      vaultState.opened = false;
+      const baseX = Math.floor(spawnPoint.x / TILE) + 6;
+      const baseY = Math.floor(spawnPoint.y / TILE);
+      vaultState.x = Math.max(2, Math.min(WORLD_WIDTH - 3, baseX));
+      vaultState.y = Math.max(2, Math.min(WORLD_HEIGHT - 3, baseY));
+    }
+
+    function checkVaultReward() {
+      if (!vaultState.active || vaultState.opened) return;
+      const px = Math.floor((player.x + player.w / 2) / TILE);
+      const py = Math.floor((player.y + player.h / 2) / TILE);
+      if (Math.abs(px - vaultState.x) <= 1 && Math.abs(py - vaultState.y) <= 1) {
+        vaultState.opened = true;
+        vaultState.active = false;
+        inventory[7] += 6;
+        addXp(120);
+        showMessage("Tresor geöffnet! +6 M-Bucks und Bonus-XP.", 2000);
+        saveGame();
+      }
+    }
+
+    function drawVaultMarker(cam) {
+      if (!vaultState.active || vaultState.opened) return;
+      const sx = vaultState.x * TILE - cam.x;
+      const sy = vaultState.y * TILE - cam.y;
+      if (sx < -TILE || sy < -TILE || sx > canvas.width + TILE || sy > canvas.height + TILE) return;
+      const pulse = 0.6 + Math.sin(Date.now() / 180) * 0.25;
+      ctx.save();
+      ctx.fillStyle = `rgba(255, 210, 120, ${pulse})`;
+      ctx.fillRect(sx + 6, sy + 6, 20, 20);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${pulse})`;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(sx + 4, sy + 4, 24, 24);
+      ctx.restore();
+    }
+
+    function resetAlarmState() {
+      alarmState.meter = 0;
+      alarmState.level = 0;
+    }
+
+    function addAlarm(amount) {
+      if (!isStealthModeActive()) return;
+      if (stealthState.active) return;
+      alarmState.meter = Math.min(100, alarmState.meter + amount);
+      const newLevel = Math.min(alarmState.levelMax, Math.floor(alarmState.meter / 34));
+      if (newLevel > alarmState.level) {
+        alarmState.level = newLevel;
+        spawnAlarmGuards(newLevel);
+        showMessage(`Alarmstufe ${alarmState.level}!`, 1600);
+      }
+    }
+
+    function spawnAlarmGuards(level) {
+      const count = Math.min(2 + level, 4);
+      const baseX = Math.floor(player.x / TILE);
+      for (let i = 0; i < count; i++) {
+        const x = Math.max(4, Math.min(WORLD_WIDTH - 4, baseX + 4 + i * 2));
+        createSlime(x * TILE, 16 * TILE, "elite");
+      }
+    }
+
+    function toggleStealthMode() {
+      if (!isStealthModeActive() || inLobby || !gameStarted) return;
+      if (stealthState.active) {
+        stealthState.active = false;
+        playStealthToggleSound(false);
+        showMessage("Tarnung aus.", 1200);
+        return;
+      }
+      if (stealthState.cooldownMs > 0) {
+        showMessage("Tarnung lädt noch.", 1200);
+        return;
+      }
+      if (stealthState.batteryMs <= 0) {
+        showMessage("Tarn-Akku leer.", 1200);
+        return;
+      }
+      stealthState.active = true;
+      playStealthToggleSound(true);
+      showMessage("Tarnung aktiv.", 1200);
+    }
+
+    function updateStealthState(deltaMs) {
+      if (!isStealthModeActive()) return;
+      if (stealthState.active) {
+        stealthState.batteryMs = Math.max(0, stealthState.batteryMs - deltaMs);
+        if (stealthState.batteryMs <= 0) {
+          stealthState.active = false;
+          stealthState.cooldownMs = stealthState.cooldownMaxMs;
+          showMessage("Tarnung erschöpft.", 1400);
+        }
+      } else if (stealthState.cooldownMs > 0) {
+        stealthState.cooldownMs = Math.max(0, stealthState.cooldownMs - deltaMs);
+      } else if (stealthState.batteryMs < stealthState.maxBatteryMs) {
+        stealthState.batteryMs = Math.min(stealthState.maxBatteryMs, stealthState.batteryMs + deltaMs * 0.6);
+      }
     }
 
     function renderLobbyScreen() {
@@ -26470,7 +27382,11 @@ async function loadMaintenanceStateFromSupabase() {
       const preview = getLockerPreviewData();
       const modeLabel = selectedLobbyMode === "rift"
         ? "Rift-Rush Queue"
-        : (selectedLobbyMode === "creative" ? "Creative Queue" : "Solo Queue");
+        : (selectedLobbyMode === "creative"
+          ? "Creative Queue"
+          : (selectedLobbyMode === "stealth"
+            ? "Tarn-Modus Queue"
+            : (selectedLobbyMode === "dossier" ? "Akte-Jagd Queue" : "Solo Queue")));
       const activeLook = playerSkin.activeSpecial ? preview.specialName : `${preview.bodyName} / ${preview.eyeName}`;
       const teammateMarkup = "";
       lobbyAvatarStage.innerHTML = `
@@ -26581,8 +27497,8 @@ async function loadMaintenanceStateFromSupabase() {
       document.body.classList.toggle("startScreenActive", startScreenActive);
       if (lobbyScreen) lobbyScreen.classList.toggle("hidden", !inLobby);
       const hideHud = inLobby || startScreenActive || isCreativeHudHidden();
-      if (topHud) topHud.style.display = hideHud ? "none" : "flex";
-      if (topHudLeft) topHudLeft.style.display = hideHud ? "none" : "grid";
+      if (hudRack) hudRack.style.display = startScreenActive ? "none" : "grid";
+      if (hudCombo) hudCombo.style.display = hideHud ? "none" : "grid";
       if (xpHud) xpHud.style.display = hideHud ? "none" : "grid";
       if (hotbar) hotbar.style.display = hideHud ? "none" : "flex";
       if (topMenuDock) topMenuDock.style.display = startScreenActive ? "none" : "flex";
@@ -26672,6 +27588,9 @@ async function loadMaintenanceStateFromSupabase() {
       currentMatchMode = "normal";
       isThreeDMode = false;
       stopRiftRush();
+      resetDossierHunt();
+      stealthState.active = false;
+      resetAlarmState();
       resetFloorLavaState();
       resetCommunityMeteorEvent();
       closeMenus();
@@ -26712,7 +27631,11 @@ async function loadMaintenanceStateFromSupabase() {
 
       currentMatchMode = selectedLobbyMode === "rift"
         ? "rift"
-        : (selectedLobbyMode === "creative" ? "creative" : "normal");
+        : (selectedLobbyMode === "creative"
+          ? "creative"
+          : (selectedLobbyMode === "stealth"
+            ? "stealth"
+            : (selectedLobbyMode === "dossier" ? "dossier" : "normal")));
       isThreeDMode = currentMatchMode === "creative";
       lastPlayedLobbyMode = selectedLobbyMode;
       inLobby = false;
@@ -26735,6 +27658,17 @@ async function loadMaintenanceStateFromSupabase() {
         startRiftRush();
       } else {
         stopRiftRush();
+      }
+      if (isStealthModeActive()) {
+        stealthState.active = false;
+        stealthState.batteryMs = stealthState.maxBatteryMs;
+        stealthState.cooldownMs = 0;
+        resetAlarmState();
+      }
+      if (isDossierModeActive()) {
+        initDossierHunt();
+      } else {
+        resetDossierHunt();
       }
       try {
         if (isThreeDMode) startThreeDMode();
@@ -26986,15 +27920,36 @@ async function loadMaintenanceStateFromSupabase() {
           </div>
         `
         : "";
-      const soloWarning = selectedLobbyMode === "solo"
-        ? `<div class="heartsWarning"><span class="warningIcon">⚠️</span>Ingame update erst am 06.04.2026 im Lauf des Tages mit neuen Gameplay-Sachen.</div>`
+      const stealthExtra = (isStealthModeActive() && gameStarted)
+        ? `
+          <div class="heartsExtra">
+            <div class="heartsExtraTitle">Tarn-Modus</div>
+            <div class="heartsExtraValue">${Math.round((stealthState.batteryMs / stealthState.maxBatteryMs) * 100)}% Akku</div>
+            <div class="heartsExtraMeta">${stealthState.active ? "Tarnung aktiv" : (stealthState.cooldownMs > 0 ? "Cooldown" : "Bereit")} • Alarmstufe ${alarmState.level}</div>
+          </div>
+        `
+        : "";
+      const dossierExtra = (isDossierModeActive() && gameStarted)
+        ? `
+          <div class="heartsExtra">
+            <div class="heartsExtraTitle">Akte-Jagd</div>
+            <div class="heartsExtraValue">${dossierState.collected}/${dossierState.total} Akten</div>
+            <div class="heartsExtraMeta">${vaultState.active ? "Tresor aktiv (Marker)" : "Finde alle Akten für den Tresor-Code"}</div>
+          </div>
+        `
+        : "";
+      const heartsWarningAllowed = isHeartsWarningAllowedForMode(getActiveHeartsWarningMode());
+      const heartsWarning = heartsWarningState.active && heartsWarningState.text && heartsWarningAllowed
+        ? `<div class="heartsWarning"><span class="warningIcon">⚠️</span>${heartsWarningState.text}</div>`
         : "";
       heartsHud.innerHTML = `
         <div class="hudTitle">Leben</div>
         <div class="heartsRow">${drawHearts()}</div>
         <div class="heartsMeta">${player.health} / ${player.maxHealth} Herzen</div>
-        ${soloWarning}
+        ${heartsWarning}
         ${riftExtra}
+        ${stealthExtra}
+        ${dossierExtra}
       `;
     }
 
@@ -28434,7 +29389,7 @@ async function loadMaintenanceStateFromSupabase() {
         lobbyModePickerMenu.querySelectorAll("[data-pick-mode]").forEach((button) => {
           button.addEventListener("click", () => {
             const mode = button.getAttribute("data-pick-mode");
-            selectLobbyMode(mode === "rift" ? "rift" : (mode === "creative" ? "creative" : "solo"));
+            selectLobbyMode(mode || "solo");
           });
         });
       }
@@ -28699,6 +29654,16 @@ async function loadMaintenanceStateFromSupabase() {
     if (adminMaintenanceOffBtn) adminMaintenanceOffBtn.addEventListener("click", () => applyMaintenanceState(false));
     if (adminModeNormalOnBtn) adminModeNormalOnBtn.addEventListener("click", () => applyModeAccessState("solo", true));
     if (adminModeNormalOffBtn) adminModeNormalOffBtn.addEventListener("click", () => applyModeAccessState("solo", false));
+    if (adminHeartsWarningOnBtn) adminHeartsWarningOnBtn.addEventListener("click", () => applyHeartsWarningActive(true));
+    if (adminHeartsWarningOffBtn) adminHeartsWarningOffBtn.addEventListener("click", () => applyHeartsWarningActive(false));
+    if (adminHeartsWarningSaveBtn) adminHeartsWarningSaveBtn.addEventListener("click", () => saveHeartsWarningText());
+    if (adminHeartsWarningResetBtn) adminHeartsWarningResetBtn.addEventListener("click", () => resetHeartsWarningText());
+    if (adminHeartsWarningInput) adminHeartsWarningInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") saveHeartsWarningText();
+    });
+    if (adminHeartsWarningScope) adminHeartsWarningScope.addEventListener("change", () => {
+      saveHeartsWarningScope(adminHeartsWarningScope.value);
+    });
     if (adminEmergencyShopOnBtn) adminEmergencyShopOnBtn.addEventListener("click", () => applyEmergencyFeatureState("shop", false));
     if (adminEmergencyShopOffBtn) adminEmergencyShopOffBtn.addEventListener("click", () => applyEmergencyFeatureState("shop", true));
     if (adminEmergencyPassOnBtn) adminEmergencyPassOnBtn.addEventListener("click", () => applyEmergencyFeatureState("battlePass", false));
@@ -28717,6 +29682,17 @@ async function loadMaintenanceStateFromSupabase() {
     if (adminEventCommunityOffBtn) adminEventCommunityOffBtn.addEventListener("click", () => applyLiveEventToggle("communityBoost", false));
     if (adminEventShopOnBtn) adminEventShopOnBtn.addEventListener("click", () => applyLiveEventToggle("shopDiscount", true));
     if (adminEventShopOffBtn) adminEventShopOffBtn.addEventListener("click", () => applyLiveEventToggle("shopDiscount", false));
+    if (adminOpModeOnBtn) adminOpModeOnBtn.addEventListener("click", () => setOpModeEnabled(true));
+    if (adminOpModeOffBtn) adminOpModeOffBtn.addEventListener("click", () => setOpModeEnabled(false));
+    if (adminFloorLavaOnBtn) adminFloorLavaOnBtn.addEventListener("click", () => setFloorLavaEnabled(true));
+    if (adminFloorLavaOffBtn) adminFloorLavaOffBtn.addEventListener("click", () => setFloorLavaEnabled(false));
+    if (adminFloorLavaHeightInput) adminFloorLavaHeightInput.addEventListener("input", () => {
+      setFloorLavaHeight(Number(adminFloorLavaHeightInput.value) || 6);
+    });
+    if (adminTeleportSpawnBtn) adminTeleportSpawnBtn.addEventListener("click", () => teleportPlayerToSpawn());
+    if (adminClearEffectsBtn) adminClearEffectsBtn.addEventListener("click", () => clearActiveEffects());
+    if (adminForceSaveBtn) adminForceSaveBtn.addEventListener("click", () => forceSaveGame());
+    if (adminRefreshUiBtn) adminRefreshUiBtn.addEventListener("click", () => refreshUiNow());
 
     adminGiveGoldBtn.addEventListener("click", () => {
       inventory[7] += 10;
@@ -28841,7 +29817,11 @@ async function loadMaintenanceStateFromSupabase() {
     adminResetShopRuleBtn.addEventListener("click", resetAdminShopRule);
 
     window.addEventListener("storage", (e) => {
-      if (![SHOP_STATE_KEY, GLOBAL_DISCOUNT_KEY].includes(e.key)) return;
+      if (![SHOP_STATE_KEY, GLOBAL_DISCOUNT_KEY, HEARTS_WARNING_KEY].includes(e.key)) return;
+      if (e.key === HEARTS_WARNING_KEY) {
+        loadHeartsWarningStateLocal();
+        return;
+      }
       loadShopAdminStateLocal();
       updateGlobalDiscountInfo();
       updateAdminShopInfo();
@@ -28924,6 +29904,8 @@ async function loadMaintenanceStateFromSupabase() {
 
       stats.distanceWalked += Math.abs(player.vx);
       checkAchievements();
+      if (isDossierModeActive()) checkDossierPickup();
+      checkVaultReward();
 
       if (player.y > WORLD_HEIGHT * TILE + 300) {
         showMessage("Du bist heruntergefallen!");
@@ -29645,6 +30627,18 @@ async function loadMaintenanceStateFromSupabase() {
       const activeBody = getActiveBodySkin();
       const activeEyes = getActiveEyeSkin();
 
+      if (isStealthModeActive() && stealthState.active) {
+        ctx.save();
+        ctx.globalAlpha = 0.7;
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(120, 255, 200, 0.18)";
+        ctx.shadowColor = "rgba(120, 255, 200, 0.45)";
+        ctx.shadowBlur = 18;
+        ctx.ellipse(px + player.w / 2, py + player.h / 2, player.w * 0.9, player.h * 0.8, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
       drawAura(px, py, playerSkin.activeSpecial, player.w, player.h);
 
       const bodyColor = player.hurtTimer > 0 ? "#ffffff" : activeBody.color;
@@ -29748,6 +30742,46 @@ async function loadMaintenanceStateFromSupabase() {
       return hearts;
     }
 
+    function clampColor(value) {
+      return Math.max(0, Math.min(255, Math.round(value)));
+    }
+
+    function hexToRgb(hex) {
+      if (!hex) return null;
+      let safe = String(hex).trim();
+      if (!safe.startsWith("#")) return null;
+      safe = safe.slice(1);
+      if (safe.length === 3) safe = safe.split("").map((c) => c + c).join("");
+      if (safe.length !== 6) return null;
+      const num = parseInt(safe, 16);
+      return {
+        r: (num >> 16) & 255,
+        g: (num >> 8) & 255,
+        b: num & 255
+      };
+    }
+
+    function rgbToHex({ r, g, b }) {
+      const toHex = (val) => clampColor(val).toString(16).padStart(2, "0");
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    function shiftColor(hex, amount) {
+      const rgb = hexToRgb(hex);
+      if (!rgb) return hex;
+      return rgbToHex({
+        r: rgb.r + amount,
+        g: rgb.g + amount,
+        b: rgb.b + amount
+      });
+    }
+
+    function toRgba(hex, alpha) {
+      const rgb = hexToRgb(hex);
+      if (!rgb) return `rgba(255,255,255,${alpha})`;
+      return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+    }
+
     function renderHotbar() {
       ensureHotbarSlots();
       hotbar.innerHTML = "";
@@ -29757,15 +30791,20 @@ async function loadMaintenanceStateFromSupabase() {
         slot.className = "slot" + (selectedBlock === id ? " selected" : "");
         slot.draggable = true;
         slot.dataset.hotbarIndex = String(i);
-        const blockColor = BLOCKS[id].color || "rgba(255,255,255,0.2)";
-        slot.style.background = `
-          radial-gradient(circle at top center, rgba(255,255,255,0.18), transparent 42%),
-          linear-gradient(180deg, ${blockColor}, rgba(20, 28, 42, 0.46) 58%, rgba(9, 14, 23, 0.82))
-        `;
+        const baseColor = (id === 8 && swords[currentSword]?.color)
+          ? swords[currentSword].color
+          : (BLOCKS[id].color || "#7c8aa0");
+        slot.style.setProperty("--slot-base", baseColor);
+        slot.style.setProperty("--slot-top", shiftColor(baseColor, 48));
+        slot.style.setProperty("--slot-deep", shiftColor(baseColor, -70));
+        slot.style.setProperty("--slot-glow", toRgba(baseColor, 0.35));
+        slot.style.setProperty("--slot-border", toRgba(baseColor, 0.55));
+        const labelClass = BLOCKS[id].name.length > 10 ? "slotLabel isUltra"
+          : (BLOCKS[id].name.length > 7 ? "slotLabel isLong" : "slotLabel");
         slot.innerHTML = `
           <div class="slotKey">${i + 1}</div>
-          <div class="slotLabel">${BLOCKS[id].name}</div>
-          <div class="slotSwatch" style="background:${blockColor};"></div>
+          <div class="${labelClass}">${BLOCKS[id].name}</div>
+          <div class="slotSwatch" style="background:${baseColor};"></div>
           <div class="slotCount">${isCreativeModeActive() ? "INF" : (inventory[id] || 0)}</div>
         `;
         slot.addEventListener("click", () => {
@@ -29908,6 +30947,12 @@ async function loadMaintenanceStateFromSupabase() {
 
       if (tx < 0 || ty < 0 || tx >= WORLD_WIDTH || ty >= WORLD_HEIGHT) return;
       if (!canReach(tx, ty)) return;
+
+      if (isStealthModeActive() && stealthState.active) {
+        stealthState.active = false;
+        stealthState.cooldownMs = Math.max(stealthState.cooldownMs, 1200);
+        showMessage("Tarnung gebrochen!", 1200);
+      }
 
       if (e.button === 0 && isCreativeModeActive() && !creativeTestMode) {
         if (creativeSetSpawnActive) {
@@ -30100,9 +31145,12 @@ async function loadMaintenanceStateFromSupabase() {
         s.dirTimer--;
         s.jumpCooldown--;
 
+        const stealthIgnore = isStealthModeActive() && stealthState.active;
         const distanceToPlayer = (player.x + player.w / 2) - (s.x + s.w / 2);
-        if (Math.abs(distanceToPlayer) < 220) {
+        const chaseRange = stealthIgnore ? 0 : 220;
+        if (!stealthIgnore && Math.abs(distanceToPlayer) < chaseRange) {
           s.vx = distanceToPlayer < 0 ? -s.moveSpeed : s.moveSpeed;
+          addAlarm(0.35);
         } else if (s.dirTimer <= 0) {
           s.vx = Math.random() > 0.5 ? s.moveSpeed : -s.moveSpeed;
           s.dirTimer = 70 + Math.floor(Math.random() * 140);
@@ -30135,6 +31183,7 @@ async function loadMaintenanceStateFromSupabase() {
         if (s.hurtTimer > 0) s.hurtTimer--;
 
         if (rectsOverlap(player.x, player.y, player.w, player.h, s.x, s.y, s.w, s.h)) {
+          if (stealthIgnore) continue;
           const playerBottom = player.y + player.h;
           const slimeTop = s.y;
 
@@ -30222,6 +31271,19 @@ async function loadMaintenanceStateFromSupabase() {
           ctx.fillRect(sx + 8, sy - 4, 4, 4);
           ctx.fillRect(sx + 16, sy - 4, 4, 4);
         }
+
+        if (isStealthModeActive() && stealthState.active) {
+          ctx.save();
+          ctx.font = "bold 14px Arial";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+          ctx.strokeStyle = "rgba(20, 40, 60, 0.6)";
+          ctx.lineWidth = 3;
+          const qx = sx + s.w / 2 - 4;
+          const qy = sy - 10;
+          ctx.strokeText("?", qx, qy);
+          ctx.fillText("?", qx, qy);
+          ctx.restore();
+        }
       }
     }
 
@@ -30257,6 +31319,7 @@ async function loadMaintenanceStateFromSupabase() {
       if (attackTimer > 0) attackTimer--;
 
       updateEffects();
+      updateStealthState(deltaMs || 16);
 
       if (gameStarted && !maintenanceMode && !inventoryOpen && !helpOpen && !shopOpen && !skillOpen && !craftOpen && !communityEventOpen && !npcOpen) {
         if (!isCreativeModeActive() || creativeTestMode) {
@@ -30269,6 +31332,7 @@ async function loadMaintenanceStateFromSupabase() {
         updateMining();
         updateRiftRushHud();
         updateRiftGlitch();
+        updateFloorLavaMode();
       }
 
       updateRiftAudio();
@@ -30282,6 +31346,9 @@ async function loadMaintenanceStateFromSupabase() {
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 drawBackground(cam);
 drawWorld(cam);
+drawFloorLava(cam);
+drawDossierMarkers(cam);
+drawVaultMarker(cam);
 drawCreativeGrid(cam);
 drawCreativeDevices(cam);
 updateRiftParticles(cam);
@@ -30303,6 +31370,7 @@ drawRiftGlitchOverlay(cam);
       requestAnimationFrame(gameLoop);
     }
 
+    loadHeartsWarningStateLocal();
     if (supabaseClient) {
   loadMaintenanceStateFromSupabase().then((loadedFromSupabase) => {
     if (loadedFromSupabase) {
@@ -30327,6 +31395,7 @@ drawRiftGlitchOverlay(cam);
 }
 
     bindStartScreenControls();
+    bindAdminTabs();
 
     try {
       loadPlayerName();
@@ -30340,6 +31409,7 @@ drawRiftGlitchOverlay(cam);
       loadRiftEffectsSetting();
       loadCreativeWorldsLocal();
       loadCreativeEditorSettings();
+      loadAdminToolsState();
       
       loadGame();
       ensureOwnedSkinsStored();
@@ -30400,6 +31470,9 @@ drawRiftGlitchOverlay(cam);
       if (tag === "input" || tag === "textarea") return;
       if (event.key.toLowerCase() === "t" && isCreativeModeActive() && gameStarted && !inLobby) {
         toggleCreativeTestMode();
+      }
+      if (event.key.toLowerCase() === "c" && isStealthModeActive() && gameStarted && !inLobby) {
+        toggleStealthMode();
       }
     });
 
