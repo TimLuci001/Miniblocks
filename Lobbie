@@ -1,0 +1,12 @@
+ function equipLobbyBackgroundFromLocker(id) {
+      ensureLobbyBackgroundOwnership();
+      if (!id || !playerSkin.ownedLobbyBackgrounds.includes(id)) return;
+      playerSkin.activeLobbyBackground = id;
+      applyLobbyBackgroundVisual();
+      saveGame();
+      renderLocker();
+      if (inLobby) renderLobbyScreen();
+      updateUI();
+      playEquipSound();
+      showMessage("Lobby-Hintergrund aktiviert!");
+    }
