@@ -13771,6 +13771,11 @@
       padding-top: 12px;
     }
 
+    .lobbyRightRail {
+      grid-template-rows: minmax(0, 1fr) auto;
+      padding-top: 12px;
+    }
+
     .lobbyHero,
     .lobbyStatsPanel,
     .lobbyFriendsPanel,
@@ -13808,10 +13813,12 @@
     }
 
     .lobbyModePanel {
-      width: calc(100% - 30px);
-      justify-self: end;
+      width: calc(100% - 18px);
+      justify-self: start;
       border-top-right-radius: 42px;
       border-bottom-left-radius: 42px;
+      display: flex;
+      flex-direction: column;
     }
 
     .lobbyFriendsPanel {
@@ -14247,6 +14254,83 @@
       background: linear-gradient(135deg, rgba(114, 228, 255, 0.9), rgba(92, 99, 255, 0.92));
       color: #08111d;
       border-color: rgba(255,255,255,0.16);
+    }
+
+    .lobbyModePanelHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .lobbyModePanelHeader .lobbyModePanelTitle {
+      margin-bottom: 0;
+    }
+
+    .lobbyStatusPill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(72, 220, 140, 0.12);
+      border: 1px solid rgba(72, 220, 140, 0.28);
+      color: #64dfb0;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lobbyModePanelDesc {
+      font-size: 12px;
+      color: rgba(214, 226, 239, 0.66);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .lobbyModeTabsRow {
+      margin-bottom: 10px;
+    }
+
+    .lobbyModeTabsLabel {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(205, 220, 237, 0.56);
+      margin-bottom: 6px;
+    }
+
+    .lobbyModeTabs {
+      display: flex;
+      gap: 5px;
+    }
+
+    .lobbyModeTab {
+      flex: 1;
+      min-height: 32px;
+      padding: 5px 8px;
+      border-radius: 11px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: rgba(214,226,239,0.66);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .lobbyModeTab.active {
+      background: rgba(255, 214, 112, 0.12);
+      border-color: rgba(255, 214, 112, 0.26);
+      color: #ffd670;
+    }
+
+    .lobbyModeCurrent {
+      flex: 1;
+      min-height: 0;
     }
 
     .lobbyFriendsEyebrow {
@@ -14725,12 +14809,32 @@
     <div class="lobbyLayout">
       <div class="lobbyLeftRail">
         <div id="lobbyStatsPanel" class="lobbyStatsPanel"></div>
+      </div>
+      <div class="lobbyHero">
+        <div class="lobbyEyebrow">Riss-Zeit Kommando</div>
+        <div class="lobbyTitle">Riss-Hub</div>
+        <div class="lobbyLead">Chapter 2 Season 3 startet im Bruch der Zeit: Instabile Portale schneiden Biome auf, und deine Crew stabilisiert die Risse mit jedem Run.</div>
+        <div id="lobbyAvatarStage" class="lobbyAvatarStage"></div>
+      </div>
+      <div class="lobbyRightRail">
         <div class="lobbyModePanel">
-          <div class="lobbyModePanelTitle">Match Steuerung</div>
+          <div class="lobbyModePanelHeader">
+            <div class="lobbyModePanelTitle">Match Steuerung</div>
+            <div id="lobbyStatusPill" class="lobbyStatusPill">Lobby Bereit</div>
+          </div>
+          <div class="lobbyModePanelDesc">Modus wählen, Party prüfen und direkt starten.</div>
+          <div class="lobbyModeTabsRow">
+            <div class="lobbyModeTabsLabel">Aktiver Modus</div>
+            <div class="lobbyModeTabs">
+              <button class="lobbyModeTab active" type="button" data-mode-tab="live">● Live</button>
+              <button class="lobbyModeTab" type="button" data-mode-tab="party">Party</button>
+              <button class="lobbyModeTab" type="button" data-mode-tab="queue">● Queue</button>
+            </div>
+          </div>
           <div class="lobbyModeCurrent">
             <div>
-              <div class="lobbyModeCurrentLabel">Aktiver Modus</div>
               <div id="lobbyModeCurrentValue" class="lobbyModeCurrentValue">Solo</div>
+              <div class="lobbyModeCurrentLabel">Aktueller Run-Typ &amp; Regeln.</div>
             </div>
             <div id="lobbyModePartyCount" class="lobbyFriendStatus lobby">1/1</div>
           </div>
@@ -14739,14 +14843,6 @@
           </div>
           <button id="lobbyReadyBtn" class="lobbyReadyBtn">Bereit</button>
         </div>
-      </div>
-      <div class="lobbyHero">
-        <div class="lobbyEyebrow">Riss-Zeit Kommando</div>
-        <div class="lobbyTitle">Riss-Hub</div>
-        <div class="lobbyLead">Chapter 2 Season 1 startet im Bruch der Zeit: Instabile Portale schneiden Biome auf, und deine Crew stabilisiert die Risse mit jedem Run.</div>
-        <div id="lobbyAvatarStage" class="lobbyAvatarStage"></div>
-      </div>
-      <div class="lobbyRightRail">
         <div id="lobbyFriendsPanel" class="lobbyFriendsPanel hidden"></div>
       </div>
     </div>
@@ -16291,6 +16387,7 @@ document.getElementById("adminResetGlobalDiscountBtn").addEventListener("click",
     const lobbyModeCurrentValue = document.getElementById("lobbyModeCurrentValue");
     const lobbyModePartyCount = document.getElementById("lobbyModePartyCount");
     const lobbyModePickerBtn = document.getElementById("lobbyModePickerBtn");
+    const lobbyStatusPill = document.getElementById("lobbyStatusPill");
     const lobbyModePickerMenu = document.getElementById("lobbyModePickerMenu");
     const lobbyModePickerCloseBtn = document.getElementById("lobbyModePickerCloseBtn");
     const modePickerLiveValue = document.getElementById("modePickerLiveValue");
@@ -26451,6 +26548,25 @@ async function loadMaintenanceStateFromSupabase() {
         lobbyReadyBtn.textContent = ended ? "Season vorbei" : (selectedModeAvailable ? "Bereit" : "Modus gesperrt");
       }
 
+      if (lobbyStatusPill) {
+        if (ended) {
+          lobbyStatusPill.textContent = "Season vorbei";
+          lobbyStatusPill.style.background = "rgba(255,80,80,0.12)";
+          lobbyStatusPill.style.borderColor = "rgba(255,80,80,0.28)";
+          lobbyStatusPill.style.color = "#ff8080";
+        } else if (selectedModeAvailable) {
+          lobbyStatusPill.textContent = "Lobby Bereit";
+          lobbyStatusPill.style.background = "";
+          lobbyStatusPill.style.borderColor = "";
+          lobbyStatusPill.style.color = "";
+        } else {
+          lobbyStatusPill.textContent = "Modus gesperrt";
+          lobbyStatusPill.style.background = "rgba(255,180,60,0.12)";
+          lobbyStatusPill.style.borderColor = "rgba(255,180,60,0.28)";
+          lobbyStatusPill.style.color = "#ffb43c";
+        }
+      }
+
       renderCreativeWorldPanel();
       ensureCreativeLockUiTimer();
     }
@@ -27447,7 +27563,7 @@ function isCreativeModeActive() {
         const totalTiers = battlePassRewards.length;
         const passProgressPct = Math.max(0, Math.min(100, ((battlePassState.xp || 0) / Math.max(1, totalTiers * BATTLE_PASS_TIER_XP)) * 100));
         lobbyStatsPanel.innerHTML = `
-          <div class="lobbyStatsTitle">Progress Feed</div>
+          <div class="lobbyStatsTitle">Progress &amp; Modus</div>
           <div class="lobbyStatsGrid">
           <div class="lobbyStatCard">
             <div class="lobbyStatLabel">Level</div>
@@ -29381,6 +29497,12 @@ function isCreativeModeActive() {
     if (lobbyModePickerBtn) lobbyModePickerBtn.addEventListener("click", () => {
       if (lobbyModePickerMenu) lobbyModePickerMenu.classList.remove("hidden");
       renderLobbyModeSelection();
+    });
+    document.querySelectorAll(".lobbyModeTab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".lobbyModeTab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+      });
     });
     if (lobbyModePickerCloseBtn) lobbyModePickerCloseBtn.addEventListener("click", () => {
       if (lobbyModePickerMenu) lobbyModePickerMenu.classList.add("hidden");
