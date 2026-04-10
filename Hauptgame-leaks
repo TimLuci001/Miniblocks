@@ -14282,6 +14282,18 @@
       text-transform: uppercase;
     }
 
+    .lobbyStatusPill--ended {
+      background: rgba(255, 80, 80, 0.12);
+      border-color: rgba(255, 80, 80, 0.28);
+      color: #ff8080;
+    }
+
+    .lobbyStatusPill--locked {
+      background: rgba(255, 180, 60, 0.12);
+      border-color: rgba(255, 180, 60, 0.28);
+      color: #ffb43c;
+    }
+
     .lobbyModePanelDesc {
       font-size: 12px;
       color: rgba(214, 226, 239, 0.66);
@@ -26551,19 +26563,13 @@ async function loadMaintenanceStateFromSupabase() {
       if (lobbyStatusPill) {
         if (ended) {
           lobbyStatusPill.textContent = "Season vorbei";
-          lobbyStatusPill.style.background = "rgba(255,80,80,0.12)";
-          lobbyStatusPill.style.borderColor = "rgba(255,80,80,0.28)";
-          lobbyStatusPill.style.color = "#ff8080";
+          lobbyStatusPill.className = "lobbyStatusPill lobbyStatusPill--ended";
         } else if (selectedModeAvailable) {
           lobbyStatusPill.textContent = "Lobby Bereit";
-          lobbyStatusPill.style.background = "";
-          lobbyStatusPill.style.borderColor = "";
-          lobbyStatusPill.style.color = "";
+          lobbyStatusPill.className = "lobbyStatusPill";
         } else {
           lobbyStatusPill.textContent = "Modus gesperrt";
-          lobbyStatusPill.style.background = "rgba(255,180,60,0.12)";
-          lobbyStatusPill.style.borderColor = "rgba(255,180,60,0.28)";
-          lobbyStatusPill.style.color = "#ffb43c";
+          lobbyStatusPill.className = "lobbyStatusPill lobbyStatusPill--locked";
         }
       }
 
@@ -29498,12 +29504,15 @@ function isCreativeModeActive() {
       if (lobbyModePickerMenu) lobbyModePickerMenu.classList.remove("hidden");
       renderLobbyModeSelection();
     });
-    document.querySelectorAll(".lobbyModeTab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".lobbyModeTab").forEach((t) => t.classList.remove("active"));
+    const lobbyModeTabs = document.querySelector(".lobbyModeTabs");
+    if (lobbyModeTabs) {
+      lobbyModeTabs.addEventListener("click", (e) => {
+        const tab = e.target.closest(".lobbyModeTab");
+        if (!tab) return;
+        lobbyModeTabs.querySelectorAll(".lobbyModeTab").forEach((t) => t.classList.remove("active"));
         tab.classList.add("active");
       });
-    });
+    }
     if (lobbyModePickerCloseBtn) lobbyModePickerCloseBtn.addEventListener("click", () => {
       if (lobbyModePickerMenu) lobbyModePickerMenu.classList.add("hidden");
     });
